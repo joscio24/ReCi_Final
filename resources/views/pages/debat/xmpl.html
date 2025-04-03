@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Post Details</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container my-4">
+    <div class="row">
+      <!-- Main Content -->
+      <div class="col-lg-8">
+        <article class="mb-4">
+          <h1 class="mb-3">Blog Post Title</h1>
+          <p class="text-muted">Published on <span>January 3, 2025</span> by <a href="#">Author Name</a></p>
+          <img src="https://via.placeholder.com/800x400" alt="Blog Image" class="img-fluid mb-3">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent volutpat ligula nec nulla consequat, sit amet tristique libero accumsan. Curabitur quis magna velit. Sed malesuada libero vitae nisi gravida volutpat...</p>
+          <p>More content goes here...</p>
+        </article>
+        <!-- Comment Section -->
+        <section id="comments">
+          <h2>Comments</h2>
+          <div class="mb-4">
+            <h5>John Doe</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+          <div class="mb-4">
+            <h5>Jane Smith</h5>
+            <p>Praesent volutpat ligula nec nulla consequat, sit amet tristique libero accumsan.</p>
+          </div>
+          <form>
+            <h4>Leave a Comment</h4>
+            <div class="mb-3">
+              <label for="comment-name" class="form-label">Name</label>
+              <input type="text" class="form-control" id="comment-name" placeholder="Your Name">
+            </div>
+            <div class="mb-3">
+              <label for="comment-email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="comment-email" placeholder="Your Email">
+            </div>
+            <div class="mb-3">
+              <label for="comment-message" class="form-label">Comment</label>
+              <textarea class="form-control" id="comment-message" rows="4" placeholder="Your Comment"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </section>
+      </div>
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <aside>
+          <h2>Recent Posts</h2>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#">How to Learn Bootstrap</a></li>
+            <li class="mb-2"><a href="#">Tips for Responsive Design</a></li>
+            <li class="mb-2"><a href="#">Top 10 CSS Tricks</a></li>
+            <li class="mb-2"><a href="#">Understanding Flexbox</a></li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
