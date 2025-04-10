@@ -30,21 +30,21 @@
 
         /* Comment Section Container */
         /* .comment-section {
-                                                            max-width: 700px;
-                                                            margin: auto;
-                                                            font-family: Arial, sans-serif;
-                                                        } */
+                                                                max-width: 700px;
+                                                                margin: auto;
+                                                                font-family: Arial, sans-serif;
+                                                            } */
 
         /* Comment Box */
         /* .comment {
-                                                            display: flex;
-                                                            align-items: flex-start;
-                                                            background: #f9f9f9;
-                                                            border-radius: 8px;
-                                                            padding: 12px;
-                                                            margin-bottom: 10px;
-                                                            position: relative;
-                                                        } */
+                                                                display: flex;
+                                                                align-items: flex-start;
+                                                                background: #f9f9f9;
+                                                                border-radius: 8px;
+                                                                padding: 12px;
+                                                                margin-bottom: 10px;
+                                                                position: relative;
+                                                            } */
 
         .comment-holder {
             padding: 10px;
@@ -113,10 +113,10 @@
         }
 
         /* .reply-line {
-                                                    width: 2px;
-                                                    background-color: #ccc;
-                                                    margin-left: 10px;
-                                                } */
+                                                        width: 2px;
+                                                        background-color: #ccc;
+                                                        margin-left: 10px;
+                                                    } */
 
         .reply-line {
             position: relative;
@@ -336,9 +336,9 @@
             <div class="col-lg-8">
                 <article class="p-1">
                     <!-- <div class="card p-2">
-                                                                                                <h1 class="mb-3">{{ $debat->title }}</h1>
+                                                                                                    <h1 class="mb-3">{{ $debat->title }}</h1>
 
-                                                                                            </div> -->
+                                                                                                </div> -->
                     <!-- <div class="post-img" style="background-image: url('/images{{ $debat->image }}'); "> -->
                     <div class="post-img" style="background-image: url('{{ Storage::url($debat->image) }}'); ">
 
@@ -426,24 +426,6 @@
                 <!-- Comment Section -->
                 <section id="comments" class="mt-4">
                     <h2>Commentaires</h2>
-                    <!-- <div class="comment-section">
-                                                                                                @foreach ($comments as $comment)
-    <div class="comment">
-                                                                                                    <span class="user-icon">
-                                                                                                        <i class="fi fi-rr-user"></i>
-                                                                                                    </span>
-                                                                                                    <div class="comment-content">
-                                                                                                        <h5>{{ $comment->user->name }}</h5>
-                                                                                                        <p>{{ $comment->texte }}</p>
-
-                                                                                                        <span class="text-muted">{{ $comment->date_commentaire }}</span>
-                                                                                                    </div>
-                                                                                                </div>
-    @endforeach
-                                                                                            </div> -->
-
-
-
 
 
                     <section id="comments" class="mt-4">
@@ -455,7 +437,7 @@
                                 <div class="comment-section card "
                                     style="overflow: scroll; scrollbar-width: none; {{ count($forComments) >= 0 ? 'height: 400px;' : 'height: 100px;' }} ">
 
-                                    @if (count($forComments) > 0 )
+                                    @if (count($forComments) > 0)
                                         @foreach ($forComments as $comment)
                                             <div class="comment-holder">
                                                 <div class="comment">
@@ -518,12 +500,10 @@
                                             </div>
                                         @endforeach
                                     @else
-
-                                            <div class="text-center h-100 w-100 d-flex"
-                                                style="flex-direction: column; justify-content: center;">
-                                                <p>Aucun commentaire</p>
-                                            </div>
-
+                                        <div class="text-center h-100 w-100 d-flex"
+                                            style="flex-direction: column; justify-content: center;">
+                                            <p>Aucun commentaire</p>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
@@ -611,7 +591,7 @@
 
                     <form id="comment-form" class="card container p-2">
                         @csrf
-                        <h4>Laisser un commentaire</h4>
+                        <h4>Je donne mon avis</h4>
                         <input type="hidden" name="id_debat" value="{{ $debat->id_debat }}">
                         @guest
                             <div class="mb-3">
@@ -732,8 +712,8 @@
                                                 <!-- Camera Button -->
 
                                                 <!-- <button type="button" id="camera-button" class="btn btn-light btn-icon me-1" style="width: 40px; height: 40px;">
-                                                                                                                                                                                                                    <i class="fas fa-camera text-muted"></i>
-                                                                                                                                                                                                                </button> -->
+                                                                                                                                                                                                                            <i class="fas fa-camera text-muted"></i>
+                                                                                                                                                                                                                        </button> -->
                                                 <!-- Photo Upload Input -->
                                                 <!-- <input type="file" id="photo-upload" name="photo" style="display: none;"> -->
 
@@ -741,7 +721,7 @@
                                                     placeholder="Votre message..." required></textarea>
 
                                                 <!-- <a class="ms-1 text-muted" href="javascript:void(0);" id="attachment-button"><i class="fas fa-paperclip"></i></a>
-                                                                                                                                                                                                                <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
+                                                                                                                                                                                                                        <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
 
                                                 <!-- <a class="ms-3 text-muted" href="javascript:void(0);" id="emoji-button"><i class="fas fa-smile"></i></a> -->
                                                 <button class="ms-3 btn btn-primary border-none" type="submit"

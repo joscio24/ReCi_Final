@@ -160,7 +160,7 @@ class HomeController extends Controller
         Auth()->user();
         $userHasVoted = Vote::where('id_debat', $debatId)
             ->where('id_user', auth()->id())
-            ->where('choix', 'true')
+            ->where('choix', true)
             ->exists();
         $likesCount = Vote::where('id_debat', $debatId)->where('choix', true)->count();
         $dislikesCount = Vote::where('id_debat', $debatId)->where('choix', false)->count();

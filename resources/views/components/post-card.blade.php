@@ -1,78 +1,3 @@
-{{-- <a href="debat/{{ $id }}" class="" style="text-decoration: none;">
-    <div class="card" style="border-radius: 10px; border: 0;  width: 100%; height: 200px;">
-        <div class=" post-cards shadow d-flex">
-            <div class="imageSection bg-danger "
-                style="width: 30%; height:100%; background-image: url('{{ asset('storage/' . $image) }}'); background-clip: initial; background-repeat: no-repeat; background-position: center center; background-size: cover; ">
-                <span
-                    class="badge position-relative bottom-10 start-50 translate-middle-x py-1
-                    {{ $status == 'Validé' ? 'bg-success' : ($status == 'En attente' ? 'bg-warning' : 'bg-danger') }}"
-                    style="font-size: 0.8rem; border-radius: 20px; opacity: 0.9; margin-bottom: 5px; width: 70%;">
-                    {{ $status }}
-                </span>
-            </div>
-            <div class="content-details p-2" style="width: 70%; height:100%;">
-                <div class="col-md-8 d-flex w-100 flex-column justify-content- ">
-                    <div>
-                        <span class="badge bg-primary px-3 py-1"
-                            style="font-size: 0.85rem;">{{ strtoupper(str_replace('_', ' ', $category)) }}</span>
-                        <small
-                            class="text-muted d-block mt-1">{{ \Carbon\Carbon::parse($date)->translatedFormat('d F Y') }}</small>
-                    </div>
-
-                    <h5 class="card-title text-truncate"
-                        style="font-weight: bold; color: #2c3e50; font-size: 1rem; max-width: 100%;">{{ $title }}
-                    </h5>
-                    <p class="card-text text-muted" style="font-size: 0.9rem;">{{ Str::limit($description, 70, '...') }}
-                    </p>
-
-                </div>
-
-
-                <div class="d-flex action-section align-items-center p-3 mt-0" style="gap: 70px;">
-                    <div class="icon-with-badge position-relative d-flex align-items-center">
-                        <i class="fi fi-rr-messages text-dark" style="font-size: 1.4rem; margin-left: 10px;"></i>
-                        <span
-                            class="badge position-absolute top-0 start-100 translate-middle badge-rounded-circle bg-white">{{ $comments }}</span>
-                    </div>
-
-
-                    <div class="icon-with-badge position-relative  d-flex align-items-center">
-                        <i class="fi fi-rr-heart  text-dark" style="font-size: 1.4rem;"></i>
-                        <span
-                            class="badge ms-1 position-absolute top-0 start-100 translate-middle badge-rounded-circle bg-white">{{ $likes }}</span>
-                    </div>
-
-                    <div class="icon-with-badge  d-flex align-items-center"
-                        onclick="openShareModal(event, 'debat/{{ $id }}')">
-                        <i class="fi fi-rr-share text-dark" style="font-size: 1.4rem;"></i>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</a>
-
-<div id="shareModal" class="modal fade" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="shareModalLabel">Partager le débat</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <h6>Sélectionnez une plateforme pour le partage:</h6>
-                <div class="d-flex justify-content-around">
-                    <button class="btn btn-primary" onclick="shareToFacebook()">Facebook</button>
-                    <button class="btn btn-info" onclick="shareToLinkedIn()">LinkedIn</button>
-                    <button class="btn btn-success" onclick="shareToWhatsApp()">WhatsApp</button>
-                    <button class="btn btn-dark" onclick="shareToInstagram()">Instagram</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
-
 
 <style>
     /* General Styles */
@@ -81,6 +6,7 @@
         border: 0;
         width: 100%;
         height: 200px;
+        background-color: #ffffff;
     }
 
     .post-cards {
@@ -200,7 +126,7 @@
     </style>
 
     <a href="debat/{{ $id }}" class="" style="text-decoration: none;">
-        <div class="cards">
+        <div class="card border-0">
             <div class="post-cards shadow d-flex">
                 <div class="imageSection bg-default" style="background-image: url('{{ asset('storage/' . $image) }}');">
                     <span class="badge position-relative bottom-10 start-50 translate-middle-x
