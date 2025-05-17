@@ -30,21 +30,21 @@
 
         /* Comment Section Container */
         /* .comment-section {
-                                                                max-width: 700px;
-                                                                margin: auto;
-                                                                font-family: Arial, sans-serif;
-                                                            } */
+                                                                                        max-width: 700px;
+                                                                                        margin: auto;
+                                                                                        font-family: Arial, sans-serif;
+                                                                                    } */
 
         /* Comment Box */
         /* .comment {
-                                                                display: flex;
-                                                                align-items: flex-start;
-                                                                background: #f9f9f9;
-                                                                border-radius: 8px;
-                                                                padding: 12px;
-                                                                margin-bottom: 10px;
-                                                                position: relative;
-                                                            } */
+                                                                                        display: flex;
+                                                                                        align-items: flex-start;
+                                                                                        background: #f9f9f9;
+                                                                                        border-radius: 8px;
+                                                                                        padding: 12px;
+                                                                                        margin-bottom: 10px;
+                                                                                        position: relative;
+                                                                                    } */
 
         .comment-holder {
             padding: 10px;
@@ -113,10 +113,10 @@
         }
 
         /* .reply-line {
-                                                        width: 2px;
-                                                        background-color: #ccc;
-                                                        margin-left: 10px;
-                                                    } */
+                                                                                width: 2px;
+                                                                                background-color: #ccc;
+                                                                                margin-left: 10px;
+                                                                            } */
 
         .reply-line {
             position: relative;
@@ -329,6 +329,38 @@
             margin-left: 5px;
             font-weight: bold;
         }
+
+
+        h3.text-danger {
+            letter-spacing: 2px;
+        }
+
+        h3.text-danger::after {
+            content: '';
+            display: block;
+            height: 4px;
+            width: 60%;
+            background-color: crimson;
+            margin: 0 auto;
+            margin-top: 5px;
+            border-radius: 2px;
+        }
+
+
+        h3.text-success {
+            letter-spacing: 2px;
+        }
+
+        h3.text-success::after {
+            content: '';
+            display: block;
+            height: 4px;
+            width: 60%;
+            background-color: rgb(7, 177, 58);
+            margin: 0 auto;
+            margin-top: 5px;
+            border-radius: 2px;
+        }
     </style>
     <div class="container my-4">
         <div class="row">
@@ -336,9 +368,9 @@
             <div class="col-lg-8">
                 <article class="p-1">
                     <!-- <div class="card p-2">
-                                                                                                    <h1 class="mb-3">{{ $debat->title }}</h1>
+                                                                                                                            <h1 class="mb-3">{{ $debat->title }}</h1>
 
-                                                                                                </div> -->
+                                                                                                                        </div> -->
                     <!-- <div class="post-img" style="background-image: url('/images{{ $debat->image }}'); "> -->
                     <div class="post-img" style="background-image: url('{{ Storage::url($debat->image) }}'); ">
 
@@ -355,7 +387,7 @@
                             <p>Proposé par: <strong>{{ $debat->user->name }}</strong> |
                                 {{ \Carbon\Carbon::parse($debat->Ddate)->translatedFormat('d F Y') }}
                             </p>
-                            <div class="col-auto">
+                            <div class="col-auto m-1">
 
                                 <div class="icon-with-badge d-flex b b -center " style="jusyify-content:center; ">
                                     <!-- voter -->
@@ -390,13 +422,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-auto {{ $userHasVoted }}">
+                            <div class="col-auto {{ $userHasVoted }} mb-2">
                                 <div class="d-flex b -center mt-2" style="gap: 20px; justify-content: center;">
                                     <!-- "Pour" (Like) Button -->
                                     <div class="d-flex align-items-center">
                                         <button class="btn btn-success d-flex align-items-center"
                                             onclick="likeDebate({{ $debat->id_debat }}, true, {{ auth()->id() }});">
-                                            <i class="fas fa-thumbs-up"></i> Je suis intéressé
+                                            <i class="fas fa-thumbs-up m-1"></i> Je suis intéressé
                                         </button>
                                         <span class="vote-count-box"
                                             id="like-count-{{ $debat->id_debat }}">{{ $likesCount }}</span>
@@ -406,7 +438,7 @@
                                     <div class="d-flex align-items-center">
                                         <button class="btn btn-danger d-flex align-items-center"
                                             onclick="likeDebate({{ $debat->id_debat }}, false, {{ auth()->id() }});">
-                                            <i class="fas fa-thumbs-down"></i> Je ne suis pas intéressé
+                                            <i class="fas fa-thumbs-down  m-1"></i> Je ne suis pas intéressé
                                         </button>
                                         <span hidden class="vote-count-box"
                                             id="dislike-count-{{ $debat->id_debat }}">{{ $dislikesCount ?? 0 }}</span>
@@ -433,7 +465,10 @@
                         <div class="row  mb-2">
                             <!-- Left Column: "For" Comments -->
                             <div class="col-md-6">
-                                <h3 class="text-success">Pour</h3>
+                                <h3
+                                    class="text-success fw-bold text-uppercase text-center display-7 mb-4 position-relative d-inline-block">
+                                    <span class="border-bottom border-3 border-success pb-1">Pour</span>
+                                </h3>
                                 <div class="comment-section card "
                                     style="overflow: scroll; scrollbar-width: none; {{ count($forComments) >= 0 ? 'height: 400px;' : 'height: 100px;' }} ">
 
@@ -458,21 +493,28 @@
                                                         </button>
 
                                                         <!-- Reply Button -->
-                                                        <button class="reply-btn btn btn-sm btn-primary"
-                                                            data-comment-id="{{ $comment->id_commentaire }}">
-                                                            Répondre
-                                                        </button>
+                                                        @auth
+                                                            <button class="reply-btn btn btn-sm btn-primary"
+                                                                data-comment-id="{{ $comment->id_commentaire }}">
+                                                                Répondre
+                                                            </button>
+                                                        @endauth
 
                                                         <!-- Reply Form (Hidden by Default) -->
-                                                        <form class="reply-form"
+                                                        <form class="reply-form p-3 rounded border shadow-sm mt-2"
                                                             data-comment-id="{{ $comment->id_commentaire }}"
-                                                            style="display: none;">
+                                                            style="display: none; background-color: #f9f9f9;">
                                                             @csrf
-                                                            <input type="text" class="reply-input" name="reply_text"
-                                                                placeholder="Votre réponse..." required>
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-primary">Envoyer</button>
+                                                            <div class="mb-2">
+                                                                <input type="text" class="form-control reply-input w-100"
+                                                                    name="reply_text" placeholder="Votre réponse..."
+                                                                    required>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-sm btn-primary">
+                                                                <i class="bi bi-send"></i> Envoyer
+                                                            </button>
                                                         </form>
+
 
                                                     </div>
                                                 </div>
@@ -510,7 +552,11 @@
 
                             <!-- Right Column: "Against" or "Indecisive" Comments -->
                             <div class="col-md-6">
-                                <h3 class="text-danger">Contre ou Indécis</h3>
+                                <h3
+                                    class="text-danger fw-bold text-uppercase text-center display-7 mb-4 position-relative d-inline-block">
+                                    <span class="border-bottom border-3 border-danger pb-1">Contre</span>
+                                </h3>
+
                                 <div class="comment-section card "
                                     style="overflow: scroll; scrollbar-width: none; {{ count($forComments) >= 0 ? 'height: 400px;' : 'height: 100px;' }} ;">
                                     @if (count($againstComments) > 0)
@@ -534,21 +580,31 @@
                                                         </button>
 
                                                         <!-- Reply Button -->
-                                                        <button class="reply-btn btn btn-sm btn-primary"
-                                                            data-comment-id="{{ $comment->id_commentaire }}">
-                                                            Répondre
-                                                        </button>
+                                                        @auth
+                                                            <button class="reply-btn btn btn-sm btn-primary"
+                                                                data-comment-id="{{ $comment->id_commentaire }}">
+                                                                Répondre
+                                                            </button>
+                                                        @endauth
 
                                                         <!-- Reply Form (Hidden by Default) -->
-                                                        <form class="reply-form"
+
+
+                                                        <form class="reply-form p-3 rounded border shadow-sm mt-2"
                                                             data-comment-id="{{ $comment->id_commentaire }}"
-                                                            style="display: none;">
+                                                            style="display: none; background-color: #f9f9f9;">
                                                             @csrf
-                                                            <input type="text" class="reply-input" name="reply_text"
-                                                                placeholder="Votre réponse..." required>
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-primary">Envoyer</button>
+                                                            <div class="mb-2">
+                                                                <input type="text"
+                                                                    class="form-control reply-input w-100"
+                                                                    name="reply_text" placeholder="Votre réponse..."
+                                                                    required>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-sm btn-primary">
+                                                                <i class="bi bi-send"></i> Envoyer
+                                                            </button>
                                                         </form>
+
                                                     </div>
                                                 </div>
 
@@ -593,6 +649,14 @@
                         @csrf
                         <h4>Je donne mon avis</h4>
                         <input type="hidden" name="id_debat" value="{{ $debat->id_debat }}">
+
+                        {{-- Hidden input for user's vote status --}}
+                        @if (isset($userHasVoted) && $userHasVoted)
+                            <input type="hidden" name="user_vote" value="true" />
+                        @else
+                            <input type="hidden" name="user_vote" value="false" />
+                        @endif
+
                         @guest
                             <div class="mb-3">
                                 <label for="comment-name" class="form-label">Nom</label>
@@ -609,6 +673,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Soumettre</button>
                     </form>
+
                 </section>
             </div>
             <!-- Sidebar -->
@@ -712,16 +777,17 @@
                                                 <!-- Camera Button -->
 
                                                 <!-- <button type="button" id="camera-button" class="btn btn-light btn-icon me-1" style="width: 40px; height: 40px;">
-                                                                                                                                                                                                                            <i class="fas fa-camera text-muted"></i>
-                                                                                                                                                                                                                        </button> -->
+                                                                                                                                                                                                                                                                            <i class="fas fa-camera text-muted"></i>
+                                                                                                                                                                                                                                                                        </button> -->
                                                 <!-- Photo Upload Input -->
                                                 <!-- <input type="file" id="photo-upload" name="photo" style="display: none;"> -->
 
-                                                <textarea name="texte" style="overflow: hidden; resize: none; height: 50px; width:100%;"
+                                                <textarea name="texte" style="overflow: hidden; resize: none; height: 50px; width:100%; border-radius: 8px;"
                                                     placeholder="Votre message..." required></textarea>
 
+
                                                 <!-- <a class="ms-1 text-muted" href="javascript:void(0);" id="attachment-button"><i class="fas fa-paperclip"></i></a>
-                                                                                                                                                                                                                        <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
+                                                                                                                                                                                                                                                                        <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
 
                                                 <!-- <a class="ms-3 text-muted" href="javascript:void(0);" id="emoji-button"><i class="fas fa-smile"></i></a> -->
                                                 <button class="ms-3 btn btn-primary border-none" type="submit"
@@ -927,10 +993,52 @@
             });
         });
 
+        // function likeDebate(debatId, choice, userId) {
+        //     if (!userId) {
+        //         showToast('Veullez vous connecter pour voter', 'warning')
+        //     }
+        //     fetch(`/debats/${debatId}/votes`, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        //             },
+        //             body: JSON.stringify({
+        //                 id_user: userId,
+        //                 id_debat: debatId,
+        //                 choix: choice
+        //             })
+        //         })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             if (data.vote) {
+        //                 const likeIcon = document.querySelector(`#likeIcon`);
+        //                 const likeCountElement = document.getElementById(`like-count-${debatId}`);
+
+
+        //                 // Update the color and count
+        //                 likeIcon.classList.remove('fi-rr-heart')
+        //                 likeIcon.classList.add('fi-sr-heart')
+        //                 likeIcon.classList.add('text-primary')
+        //                 // likeIcon.style.color = 'blue'; // Change icon color to red
+        //                 const currentLikes = parseInt(likeCountElement.textContent) || 0;
+        //                 likeCountElement.textContent = currentLikes + 1;
+        //                 window.location.reload();
+        //             } else {
+        //                 window.location.reload();
+        //             }
+        //         })
+        //         .catch(error => console.error('Error:', error));
+        // }
+
+
+
         function likeDebate(debatId, choice, userId) {
             if (!userId) {
-                showToast('Veullez vous connecter pour voter', 'warning')
+                showToast('Veuillez vous connecter pour voter', 'warning');
+                return;
             }
+
             fetch(`/debats/${debatId}/votes`, {
                     method: 'POST',
                     headers: {
@@ -939,30 +1047,36 @@
                     },
                     body: JSON.stringify({
                         id_user: userId,
-                        id_debat: debatId,
                         choix: choice
                     })
                 })
                 .then(response => response.json())
                 .then(data => {
+                    const likeIcon = document.querySelector(`#likeIcon`);
+                    const likeCountElement = document.getElementById(`like-count-${debatId}`);
+
                     if (data.vote) {
-                        const likeIcon = document.querySelector(`#likeIcon`);
-                        const likeCountElement = document.getElementById(`like-count-${debatId}`);
-
-
-                        // Update the color and count
-                        likeIcon.classList.remove('fi-rr-heart')
-                        likeIcon.classList.add('fi-sr-heart')
-                        likeIcon.classList.add('text-primary')
-                        // likeIcon.style.color = 'blue'; // Change icon color to red
-                        const currentLikes = parseInt(likeCountElement.textContent) || 0;
-                        likeCountElement.textContent = currentLikes + 1;
-                        window.location.reload();
+                        // Vote added or updated
+                        likeIcon.classList.remove('fi-rr-heart');
+                        likeIcon.classList.add('fi-sr-heart', 'text-primary');
                     } else {
-                        window.location.reload();
+                        // Vote removed
+                        likeIcon.classList.remove('fi-sr-heart', 'text-primary');
+                        likeIcon.classList.add('fi-rr-heart');
                     }
+
+                    // Update likes count
+                    likeCountElement.textContent = data.likes_count;
+
+                    // Optionally update dislikes count if you track it in UI
+
+                    showToast(data.message, 'success');
+                    location.reload();
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error);
+                    showToast('Erreur lors du vote', 'error');
+                });
         }
     </script>
 
@@ -1150,7 +1264,7 @@
                 .then(response => response.json())
                 .then(data => {
                     showToast(data.message, 'success'); // Notify user
-                    location.reload(); // Reload comments
+                    // location.reload(); // Reload comments
                 })
                 .catch(error => console.error('Error:', error));
         });

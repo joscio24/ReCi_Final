@@ -19,8 +19,14 @@ class Commentaire extends Model
         'texte',
         'date_commentaire',
         'id_parent_commentaire',
+        'choix',
+        'valide',
     ];
 
+    protected $casts = [
+        'choix' => 'boolean',
+        'valide' => 'boolean',
+    ];
     // Relationships
     public function user()
     {

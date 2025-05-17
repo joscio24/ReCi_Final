@@ -8,28 +8,63 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    // public function store(Request $request, $idDebat)
+    // {
+    //     $request->validate([
+    //         'id_debat' => 'required|exists:debats,id_debat',
+    //         'content' => 'required|string|max:500',
+    //         'id_parent_commentaire' => 'nullable|exists:commentaires,id_commentaire',
+    //         'id_vote' => 'nullable|exists:votes,id_vote',
+    //         'user_vote' => 'required|in:true,false',
+    //     ]);
+
+    //     $Commentaire = Debat::findOrFail($idDebat);
+
+    //     $Commentaire = $Commentaire->commentaires()->create([
+    //         'id_user' => auth()->id(), // L'utilisateur connecté
+    //         'id_debat' => $idDebat, // ID du débat associé
+    //         'id_vote' => $request->input('id_vote') ?? null, // Optionnel, si lié à un vote
+    //         'texte' => $request->input('content'), // Contenu du commentaire
+    //         'id_parent_commentaire' => $request->input('id_parent_commentaire') ?? null, // Pour les réponses
+    //         'date_commentaire' => now(), // Date actuelle
+    //     ]);
+
+    //     return response()->json(['message' => 'Commentaire ajouté avec succès!']);
+    // }
+
     public function store(Request $request, $idDebat)
-    {
-        $request->validate([
-            'id_debat' => 'required|exists:debats,id_debat',
-            'content' => 'required|string|max:500',
-            'id_parent_commentaire' => 'nullable|exists:commentaires,id_commentaire',
-            'id_vote' => 'nullable|exists:votes,id_vote',
-        ]);
+{
+    $request->validate([
+        'id_debat' => 'required|exists:debats,id_debat',
+        'content' => 'required|string|max:500',
+        'id_parent_commentaire' => 'nullable|exists:commentaires,id_commentaire',
+        'id_vote' => 'nullable|exists:votes,id_vote',
+        'user_vote' => ['required', 'in:true,false'], // validate as string 'true' or 'false'
+    ]);
 
-        $Commentaire = Debat::findOrFail($idDebat);
+    $debat = Debat::findOrFail($idDebat);
 
-        $Commentaire = $Commentaire->commentaires()->create([
-            'id_user' => auth()->id(), // L'utilisateur connecté
-            'id_debat' => $idDebat, // ID du débat associé
-            'id_vote' => $request->input('id_vote') ?? null, // Optionnel, si lié à un vote
-            'texte' => $request->input('content'), // Contenu du commentaire
-            'id_parent_commentaire' => $request->input('id_parent_commentaire') ?? null, // Pour les réponses
-            'date_commentaire' => now(), // Date actuelle
-        ]);
+    // Convert string 'true'/'false' to boolean true/false:
+    $userVoteBool = $request->input('user_vote') === 'true' ? true : false;
 
-        return response()->json(['message' => 'Commentaire ajouté avec succès!']);
-    }
+    $commentaire = $debat->commentaires()->create([
+        'id_user' => auth()->id(), // or null if guest
+        'id_debat' => $idDebat,
+        'id_vote' => $request->input('id_vote') ?? null,
+        'texte' => $request->input('content'),
+        'id_parent_commentaire' => $request->input('id_parent_commentaire') ?? null,
+        'choix' => $userVoteBool,  // store boolean here!
+        'date_commentaire' => now(),
+        'valide' => false,
+    ]);
+
+
+    return response()->json([
+        'message' => 'Commentaire ajouté avec succès!',
+        'commentaire' => $commentaire,  // Send the saved comment data
+    ]);
+}
+
 
     public function reply(Request $request, $idComment)
     {
