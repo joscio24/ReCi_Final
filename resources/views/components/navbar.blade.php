@@ -25,9 +25,8 @@
 
             <!-- Menu -->
             <ul class="menu d-none d-md-flex">
-                <li><a href="/debats" class="menu-link">Débats</a></li>
-                <li><a href="#si" class="menu-link active text-white" style="font-size: medium; font-weight: 900;"
-                        data-bs-toggle="modal" data-bs-target="#contributionModal">Lancer un débat</a></li>
+                <li><a href="/debats" class="menu-link">Tous les débats</a></li>
+
 
                 @auth
                     <!-- Show only if user is authenticated -->

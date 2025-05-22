@@ -131,20 +131,21 @@
                 <div class="imageSection bg-default" style="background-image: url('{{ asset('storage/' . $image) }}');">
                     <span class="badge position-relative bottom-10 start-50 translate-middle-x
                         {{ $status == 'Validé' ? 'bg-success' : ($status == 'En attente' ? 'bg-warning' : 'bg-danger') }}">
-                        {{ $status }}
+                        {{ $status == 'Validé' ? 'Ouvert' : $status }}
                     </span>
                 </div>
                 <div class="content-details p-2">
                     <div class="col-md-8 d-flex w-100 flex-column">
+
+                        <h5 class="card-title text-truncate">{{ $title }}</h5>
                         <div>
-                            <span class="badge bg-primary px-3 py-1">
-                                {{ strtoupper(str_replace('_', ' ', $category)) }}
-                            </span>
                             <small class="text-muted d-block mt-1">
                                 {{ \Carbon\Carbon::parse($date)->translatedFormat('d F Y') }}
                             </small>
+                            <span class="badge bg-primary px-2 py-1 " style="font-size: 10px;">
+                                {{ strtoupper(str_replace('_', ' ', $category)) }}
+                            </span>
                         </div>
-                        <h5 class="card-title text-truncate">{{ $title }}</h5>
                         <p class="card-text text-muted">{{ Str::limit($description, 70, '...') }}</p>
                     </div>
                     <div class="d-flex action-section align-items-center p-3 mt-0">

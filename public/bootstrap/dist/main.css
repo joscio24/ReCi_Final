@@ -46,11 +46,14 @@
     body {
         font-family: var(--font-family);
         font-size: var(--font-size);
-        background-image: url("/assets/imag/tic_tac_fond.png"), linear-gradient(rgba(128, 128, 128, 0.3), rgba(128, 128, 128, 0.3)); /* Gray tint */
+        background-image: url("/assets/imag/tic_tac_fond.png"), linear-gradient(rgba(128, 128, 128, 0.3), rgba(128, 128, 128, 0.3));
+        /* Gray tint */
         background-blend-mode: overlay;
         background-color: var(--background-color);
-        background-attachment: fixed; /* Keeps the image fixed on scroll */
-        background-size: cover; /* Ensures the image covers the whole screen */
+        background-attachment: fixed;
+        /* Keeps the image fixed on scroll */
+        background-size: cover;
+        /* Ensures the image covers the whole screen */
         color: var(--text-color);
         padding: 0;
         /* overflow: hidden; */
@@ -67,7 +70,7 @@
         /* Hides scrollbar for Webkit browsers (Chrome, Safari) */
     }
 
-    .active_sender{
+    .active_sender {
 
         border-radius: 20px;
         border-bottom-right-radius: 0;
@@ -251,7 +254,8 @@
         border-radius: 26px;
 
     }
-    .imageSection{
+
+    .imageSection {
         display: flex;
         flex-direction: column;
         justify-content: end;
@@ -263,20 +267,22 @@
         transition: transform 0.2s;
         transform: scale(1.03);
     }
-    .post-cards{
+
+    .post-cards {
         height: 200px;
         display: flex;
         border-radius: 10px;
         overflow: hidden;
         /* padding: 10px; */
     }
-    .action-section{
+
+    .action-section {
         position: absolute;
         width: 100%;
         bottom: -10px;
         left: 05px;
         justify-content: center;
-        margin-top: 10px ;
+        margin-top: 10px;
         /* background-color: #fff; */
     }
 
@@ -976,12 +982,18 @@
 
     .d-list {
         display: flex;
-        gap: 20px;
+        row-gap: 20px;
+        column-gap: 24.3px;
         margin-top: 2em;
         justify-content: center;
     }
 
-    .badge-light-success{
+    .card.shadow.interest-domain.col-lg-3 {
+        flex: 0 0 auto;
+        width: 30.3%;
+      }
+
+    .badge-light-success {
 
         background-color: #67ffae;
         display: flex;
@@ -992,7 +1004,8 @@
         color: #000;
         border-radius: 5px;
     }
-    .badge-light-danger{
+
+    .badge-light-danger {
 
         background-color: #ff6c67;
         color: #f9f9f9;

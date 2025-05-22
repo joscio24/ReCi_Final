@@ -8,6 +8,7 @@ use App\Models\Debat;
 use App\Models\Link;
 use App\Models\Vote;
 use App\Models\Message;
+use App\Models\Commentaire;
 
 class HomeController extends Controller
 {
@@ -339,7 +340,14 @@ public function debats()
 
     // Séparer les commentaires selon le choix "pour" ou "contre"
     $forComments = $comments->where('choix', true);
-    $againstComments = $comments->where('choix', false);
+    // $againstComments = $comments->where('choix', false);
+    $againstComments = Commentaire::with(['user', 'replies.user', 'replies.replies.user']) // eager load nested
+    ->where('id_debat', $debatId)
+    ->where('valide', true)
+    ->where('choix', false)
+    ->whereNull('id_parent_commentaire') // only top-level comments
+    ->get();
+
 
     // Vérifier si l'utilisateur connecté a voté "pour"
     $userHasVoted = Vote::where('id_debat', $debatId)

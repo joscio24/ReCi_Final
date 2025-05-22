@@ -33,37 +33,71 @@ class CommentController extends Controller
     // }
 
     public function store(Request $request, $idDebat)
-{
-    $request->validate([
-        'id_debat' => 'required|exists:debats,id_debat',
-        'content' => 'required|string|max:500',
-        'id_parent_commentaire' => 'nullable|exists:commentaires,id_commentaire',
-        'id_vote' => 'nullable|exists:votes,id_vote',
-        'user_vote' => ['required', 'in:true,false'], // validate as string 'true' or 'false'
-    ]);
+    {
+        $request->validate([
+            'id_debat' => 'required|exists:debats,id_debat',
+            'content' => 'required|string|max:500',
+            'id_parent_commentaire' => 'nullable|exists:commentaires,id_commentaire',
+            'id_vote' => 'nullable|exists:votes,id_vote',
+            'user_vote' => ['required', 'in:true,false'], // validate as string 'true' or 'false'
+        ]);
 
-    $debat = Debat::findOrFail($idDebat);
+        $debat = Debat::findOrFail($idDebat);
 
-    // Convert string 'true'/'false' to boolean true/false:
-    $userVoteBool = $request->input('user_vote') === 'true' ? true : false;
+        // Convert string 'true'/'false' to boolean true/false:
+        $userVoteBool = $request->input('user_vote') === 'true' ? true : false;
 
-    $commentaire = $debat->commentaires()->create([
-        'id_user' => auth()->id(), // or null if guest
-        'id_debat' => $idDebat,
-        'id_vote' => $request->input('id_vote') ?? null,
-        'texte' => $request->input('content'),
-        'id_parent_commentaire' => $request->input('id_parent_commentaire') ?? null,
-        'choix' => $userVoteBool,  // store boolean here!
-        'date_commentaire' => now(),
-        'valide' => false,
-    ]);
+        $commentaire = $debat->commentaires()->create([
+            'id_user' => auth()->id(), // or null if guest
+            'id_debat' => $idDebat,
+            'id_vote' => $request->input('id_vote') ?? null,
+            'texte' => $request->input('content'),
+            'id_parent_commentaire' => $request->input('id_parent_commentaire') ?? null,
+            'choix' => $userVoteBool,  // store boolean here!
+            'date_commentaire' => now(),
+            'valide' => false,
+        ]);
 
 
-    return response()->json([
-        'message' => 'Commentaire ajouté avec succès!',
-        'commentaire' => $commentaire,  // Send the saved comment data
-    ]);
-}
+        return response()->json([
+            'message' => 'Commentaire ajouté avec succès!',
+            'commentaire' => $commentaire,  // Send the saved comment data
+        ]);
+    }
+
+
+    // public function reply(Request $request, $idComment)
+    // {
+    //     $request->validate([
+    //         'reply_text' => 'required|string|max:500',
+    //     ]);
+
+    //     $comment = Commentaire::findOrFail($idComment);
+
+    //     $reply = $comment->replies()->create([
+    //         'id_user' => auth()->id(),
+    //         'id_debat' => $comment->id_debat,
+    //         'texte' => $request->input('reply_text'),
+    //         'id_parent_commentaire' => $idComment,
+    //         'date_commentaire' => now(),
+    //     ]);
+
+    //     // Load the user to return with the reply
+    //     $reply->load('user');
+
+    //     return response()->json([
+    //         'message' => 'Reply added successfully!',
+    //         'reply' => [
+    //             'id' => $reply->id,
+    //             'user' => [
+    //                 'id' => $reply->user->id,
+    //                 'name' => $reply->user->name,
+    //             ],
+    //             'texte' => $reply->texte,
+    //             'date_commentaire' => $reply->date_commentaire->format('Y-m-d H:i:s'),
+    //         ]
+    //     ]);
+    // }
 
 
     public function reply(Request $request, $idComment)
@@ -72,17 +106,20 @@ class CommentController extends Controller
             'reply_text' => 'required|string|max:500',
         ]);
 
-        $comment = Commentaire::findOrFail($idComment);
+        // Find the parent comment or reply
+        $parent = Commentaire::findOrFail($idComment);
 
-        $reply = $comment->replies()->create([
+        // Create a new reply with the parent ID set
+        $reply = $parent->replies()->create([
             'id_user' => auth()->id(),
-            'id_debat' => $comment->id_debat,
+            'id_debat' => $parent->id_debat, // Same debat as the parent
             'texte' => $request->input('reply_text'),
-            'id_parent_commentaire' => $idComment,
+            'id_parent_commentaire' => $idComment, // Set the parent ID
             'date_commentaire' => now(),
+            'valide' => false,
         ]);
 
-        // Load the user to return with the reply
+        // Eager load user relationship
         $reply->load('user');
 
         return response()->json([
@@ -98,6 +135,7 @@ class CommentController extends Controller
             ]
         ]);
     }
+
 
 
 

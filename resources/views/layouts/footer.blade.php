@@ -23,29 +23,35 @@
             <h3>Contribuer</h3>
             <hr class="divider-hr">
             <ul>
-                <li><a href="#">Se connecter</a></li>
-                <li><a href="#">S'inscrire</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="https://reci.bj">À propos</a></li>
+                @guest
+
+                    <li><a href="/login">Se connecter</a></li>
+                    <li><a href="/register">S'inscrire</a></li>
+                @endguest
+                <li><a href="#si" class="menu-link active text-white" style="font-size: medium; font-weight: 900;"
+                    data-bs-toggle="modal" data-bs-target="delete#contributionModal">Lancer un débat</a></li>
+                <li><a href="https://reci.bj/faq/">FAQ</a></li>
+                <li><a href="https://reci.bj/apropos/">À propos</a></li>
+                <li><a href="https://reci.bj/rejoindre/" class="text-white fw-bold fs-6 mt-4">Contact</a></li>
+
+
             </ul>
-            <a href="#" class="text-white mt-4">Contact</a>
         </div>
     </div>
     <div class="footer-bottom p-4">
         <div class="footer-links-bottom">
-            <a href="#">Obtenir de l'aide</a>
-            <a href="#">Privacy</a>
+            <a href="https://reci.bj/politique-de-confidentialite/">Privacy</a>
             <a href="#">Cookies</a>
-            <a href="#">Accessibility statement</a>
 
-            <a href="#">Terms and conditions</a>
+            <a href="https://reci.bj/politique-de-confidentialite/">Terms and conditions</a>
         </div>
-        <div class="footer-legal d-flex justify-content-between mt-4" style="justify-content: space-between; gap: 40px; ">
+        <div class="footer-legal d-flex justify-content-between mt-4"
+            style="justify-content: space-between; gap: 40px; ">
             <p>
                 <span class="license">RéCi</span>
+                            <p>© 2024</p>
                 <a href="#" style="color: white;"></a>
             </p>
-            <p>© 2024</p>
         </div>
         <div class="footer-logo">
             <div class="logo">

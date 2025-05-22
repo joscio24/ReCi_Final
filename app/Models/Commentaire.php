@@ -43,15 +43,24 @@ class Commentaire extends Model
         return $this->belongsTo(Vote::class, 'id_vote');
     }
 
+    // public function replies()
+    // {
+    //     return $this->hasMany(Commentaire::class, 'id_parent_commentaire');
+    // }
+
     public function replies()
     {
-        return $this->hasMany(Commentaire::class, 'id_parent_commentaire');
+        return $this->hasMany(Commentaire::class, 'id_parent_commentaire')->with('replies', 'user');
     }
 
+
+
+    public function parent()
+    {
+        return $this->belongsTo(Commentaire::class, 'id_parent_commentaire');
+    }
     public function likes()
-{
-    return $this->belongsToMany(User::class, 'comment_likes', 'commentaire_id', 'user_id')->withTimestamps();
+    {
+        return $this->belongsToMany(User::class, 'comment_likes', 'commentaire_id', 'user_id')->withTimestamps();
+    }
 }
-
-}
-
