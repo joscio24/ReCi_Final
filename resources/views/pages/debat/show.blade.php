@@ -864,11 +864,11 @@
                         @guest
                             <div class="mb-3">
                                 <label for="comment-name" class="form-label">Nom</label>
-                                <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                                <input type="text" name="name" class="form-control" placeholder="Nom et Prénom" required>
                             </div>
                             <div class="mb-3">
                                 <label for="comment-email" class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                                <input type="email" name="email" class="form-control" placeholder="Email" required>
                             </div>
                         @endguest
                         <div class="mb-3">

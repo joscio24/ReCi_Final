@@ -14,7 +14,7 @@ class UtilisateurFactory extends Factory
             'nom' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'password' => bcrypt('password'),  // Password is set to 'secret' for testing purposes. In a real-world application, this should be hashed using bcrypt.  // Password is set to 'secret' for testing purposes. In a real-world application, this should be hashed using bcrypt.  // Password is set to 'secret' for testing purposes. In a real-world application, this should be hashed using bcrypt.
-            'role' => $this->faker->randomElement(['Admin', 'User']),
+            'role' => $this->faker->randomElement(['admin', 'user']),
         ];
     }
 }
