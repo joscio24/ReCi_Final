@@ -22,6 +22,7 @@
 </html> --}}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,6 +35,7 @@
             padding: 0;
             text-align: center;
         }
+
         .container {
             max-width: 500px;
             margin: 50px auto;
@@ -42,17 +44,20 @@
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
+
         .logo {
             width: 60px;
             margin-bottom: 15px;
         }
+
         h1 {
             font-size: 24px;
             color: #333;
             margin-bottom: 10px;
         }
+
         .otp-box {
-            background: #ff7b00;
+            background: #2e0261;
             padding: 20px;
             font-size: 28px;
             font-weight: bold;
@@ -62,11 +67,13 @@
             color: #fff;
             box-shadow: 0 4px 10px rgba(255, 123, 0, 0.3);
         }
+
         .message {
             font-size: 16px;
             color: #555;
             margin: 15px 0;
         }
+
         .footer {
             margin-top: 20px;
             font-size: 12px;
@@ -74,10 +81,14 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
+        <img id="logo-img" src="https://mon.reci.bj/images/logo_reci_noir.png" alt="Logo" class="mb-3" style="width: 120px;" />
+
         <h1>🔐 Vérification OTP</h1>
-        <p class="message">Utilisez le code OTP ci-dessous pour finaliser votre connexion. Ce code expirera dans <b>10 minutes</b>.</p>
+        <p class="message">Utilisez le code OTP ci-dessous pour finaliser votre connexion. Ce code expirera dans <b>10
+                minutes</b>.</p>
         <div class="otp-box">{{ $otp }}</div>
         <p class="message">Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer cet e-mail.</p>
         <div class="footer">
@@ -85,4 +96,5 @@
         </div>
     </div>
 </body>
+
 </html>

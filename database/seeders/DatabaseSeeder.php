@@ -39,9 +39,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UtilisateurSeeder::class,
             DebatSeeder::class,
-            VoteSeeder::class, // Make sure this matches the actual class name
-            CommentaireSeeder::class,
-            ChatSeeder::class,
+            // VoteSeeder::class, // Make sure this matches the actual class name
+            // CommentaireSeeder::class,
+            // ChatSeeder::class,
         ]);
 
     }

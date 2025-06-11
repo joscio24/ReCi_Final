@@ -56,6 +56,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\OTP;
 use App\Helpers\OTPHelper;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -71,21 +72,27 @@ class LoginController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
-            $user = Auth::user();
+        $user = \App\Models\User::where('email', $request->email)->first();
 
-            // Generate and send OTP
-            OTPHelper::generateOTP($user->email);
+        if ($user && \Hash::check($request->password, $user->password)) {
+            // Attempt to generate and send OTP
+            $otpSent = OTPHelper::generateOTP($user->email);
 
-            // Store email in session for OTP verification
-            session(['otp_email' => $user->email]);
+            if ($otpSent) {
+                // Store email in session for OTP verification
+                session(['otp_email' => $user->email]);
 
-            // Redirect to OTP verification page
-            return redirect()->route('otp.verify.form');
+                // Redirect to OTP verification page
+                return redirect()->route('otp.verify.form');
+            } else {
+                // OTP generation or sending failed
+                return back()->withErrors(['otp' => 'Failed to send OTP. Please try again.']);
+            }
         }
 
         return back()->withErrors(['email' => 'Invalid credentials.'])->withInput();
     }
+
 
     public function logout(Request $request)
     {

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title') OTP | Verification @endSection
 @section('content')
 
 

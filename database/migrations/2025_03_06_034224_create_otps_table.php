@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('otps', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('otp');
             $table->timestamp('expires_at');
-            $table->timestamps();
         });
     }
+
 
 
     /**

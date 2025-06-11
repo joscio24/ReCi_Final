@@ -26,22 +26,22 @@ class OTPVerificationController extends Controller
         $otpRecord = OTP::where('email', $email)->where('otp', $request->otp)->first();
 
         if (!$otpRecord || Carbon::now()->gt($otpRecord->expires_at)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid or expired OTP.'
-            ]);
             return back()->withErrors(['otp' => 'Invalid or expired OTP.']);
         }
 
         // OTP is valid, delete it
         $otpRecord->delete();
 
+        // Authenticate the user
+        $user = \App\Models\User::where('email', $email)->first();
+        Auth::login($user);
+
         // Generate Sanctum token
-        $user = Auth::user();
         $token = $user->createToken('YourApp')->plainTextToken;
 
-        // Store token in session
-        session(['token' => $token]);
+        // Optionally: remove session data
+        session()->forget('otp_email');
+
         return response()->json([
             'success' => true,
             'access_token' => $token,

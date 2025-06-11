@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title') RéCi| Inscription @endSection
 @section('content')
 
 <div class="register-page login-page bg-light d-flex align-items-center justify-content-center vh-100">
