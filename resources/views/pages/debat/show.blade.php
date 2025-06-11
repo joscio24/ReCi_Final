@@ -485,7 +485,7 @@
                             <!-- Like Button -->
 
                             <p>Proposé par: <strong>{{ $debat->user->name }}</strong> |
-                                {{ \Carbon\Carbon::parse($debat->Ddate)->translatedFormat('d F Y') }}
+                                {{ \Carbon\Carbon::parse($debat->created_at)->translatedFormat('d F Y') }}
                             </p>
                             <div class="col-auto m-1">
 

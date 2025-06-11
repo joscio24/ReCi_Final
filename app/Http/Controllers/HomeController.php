@@ -135,148 +135,148 @@ class HomeController extends Controller
 
 
     public function index()
-{
-    $cards = Card::all();
-    $post_cards = PostCard::all();
-    $debates = Debat::withCount(['commentaires', 'votes'])
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
-    $links = Link::all();
+    {
+        $cards = Card::all();
+        $post_cards = PostCard::all();
+        $debates = Debat::withCount(['commentaires', 'votes'])
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
+        $links = Link::all();
 
-    return view('pages.index', compact('cards', 'post_cards', 'debates', 'links'));
-}
+        return view('pages.index', compact('cards', 'post_cards', 'debates', 'links'));
+    }
 
-public function sante()
-{
-    $cards = Card::all();
-    $post_cards = Debat::withCount(['commentaires', 'votes'])
-        ->where('category', 'sante_publique')
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
+    public function sante()
+    {
+        $cards = Card::all();
+        $post_cards = Debat::withCount(['commentaires', 'votes'])
+            ->where('category', 'sante_publique')
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
 
-    return view('pages.sante', compact('post_cards', 'cards'));
-}
+        return view('pages.sante', compact('post_cards', 'cards'));
+    }
 
-public function droits()
-{
-    $cards = Card::all();
-    $post_cards = Debat::withCount(['commentaires', 'votes'])
-        ->where('category', 'droits_humains_et_citoyennete')
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
+    public function droits()
+    {
+        $cards = Card::all();
+        $post_cards = Debat::withCount(['commentaires', 'votes'])
+            ->where('category', 'droits_humains_et_citoyennete')
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
 
-    return view('pages.droits', compact('post_cards', 'cards'));
-}
+        return view('pages.droits', compact('post_cards', 'cards'));
+    }
 
-public function technologie()
-{
-    $cards = Card::all();
-    $post_cards = Debat::withCount(['commentaires', 'votes'])
-        ->where('category', 'technologie_et_innovation')
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
+    public function technologie()
+    {
+        $cards = Card::all();
+        $post_cards = Debat::withCount(['commentaires', 'votes'])
+            ->where('category', 'technologie_et_innovation')
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
 
-    return view('pages.technologie', compact('post_cards', 'cards'));
-}
+        return view('pages.technologie', compact('post_cards', 'cards'));
+    }
 
-public function securite_et_defense()
-{
-    $cards = Card::all();
-    $post_cards = Debat::withCount(['commentaires', 'votes'])
-        ->where('category', 'securite_et_defense')
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
+    public function securite_et_defense()
+    {
+        $cards = Card::all();
+        $post_cards = Debat::withCount(['commentaires', 'votes'])
+            ->where('category', 'securite_et_defense')
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
 
-    return view('pages.securite_et_defense', compact('post_cards', 'cards'));
-}
+        return view('pages.securite_et_defense', compact('post_cards', 'cards'));
+    }
 
-public function environment()
-{
-    $cards = Card::all();
-    $post_cards = Debat::withCount(['commentaires', 'votes'])
-        ->where('category', 'environnement_et_developpement')
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
+    public function environment()
+    {
+        $cards = Card::all();
+        $post_cards = Debat::withCount(['commentaires', 'votes'])
+            ->where('category', 'environnement_et_developpement')
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
 
-    return view('pages.environment', compact('post_cards', 'cards'));
-}
+        return view('pages.environment', compact('post_cards', 'cards'));
+    }
 
-public function relationInter()
-{
-    $cards = Card::all();
-    $post_cards = Debat::withCount(['commentaires', 'votes'])
-        ->where('category', 'relations_internationale')
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
+    public function relationInter()
+    {
+        $cards = Card::all();
+        $post_cards = Debat::withCount(['commentaires', 'votes'])
+            ->where('category', 'relations_internationale')
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
 
-    return view('pages.relations', compact('post_cards', 'cards'));
-}
+        return view('pages.relations', compact('post_cards', 'cards'));
+    }
 
-public function education()
-{
-    $cards = Card::all();
-    $post_cards = Debat::withCount(['commentaires', 'votes'])
-        ->where('category', 'education')
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
+    public function education()
+    {
+        $cards = Card::all();
+        $post_cards = Debat::withCount(['commentaires', 'votes'])
+            ->where('category', 'education')
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
 
-    return view('pages.education', compact('post_cards', 'cards'));
-}
+        return view('pages.education', compact('post_cards', 'cards'));
+    }
 
-public function economie()
-{
-    $cards = Card::all();
-    $post_cards = Debat::withCount(['commentaires', 'votes'])
-        ->where('category', 'economie_et_developpement')
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
+    public function economie()
+    {
+        $cards = Card::all();
+        $post_cards = Debat::withCount(['commentaires', 'votes'])
+            ->where('category', 'economie_et_developpement')
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
 
-    return view('pages.economie', compact('post_cards', 'cards'));
-}
+        return view('pages.economie', compact('post_cards', 'cards'));
+    }
 
-public function politiques()
-{
-    $cards = Card::all();
-    $post_cards = Debat::withCount(['commentaires', 'votes'])
-        ->where('category', 'Politique')
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
+    public function politiques()
+    {
+        $cards = Card::all();
+        $post_cards = Debat::withCount(['commentaires', 'votes'])
+            ->where('category', 'Politique')
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
 
-    return view('pages.politique', compact('post_cards', 'cards'));
-}
+        return view('pages.politique', compact('post_cards', 'cards'));
+    }
 
-public function justice()
-{
-    $cards = Card::all();
-    $post_cards = Debat::withCount(['commentaires', 'votes'])
-        ->where('category', 'Justice')
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
+    public function justice()
+    {
+        $cards = Card::all();
+        $post_cards = Debat::withCount(['commentaires', 'votes'])
+            ->where('category', 'Justice')
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
 
-    return view('pages.justice', compact('post_cards', 'cards'));
-}
+        return view('pages.justice', compact('post_cards', 'cards'));
+    }
 
-public function debats()
-{
-    $cards = Card::all();
-    $debats = Debat::withCount(['commentaires', 'votes'])
-        ->whereNotIn('statut', ['En attente', 'Rejeté'])
-        ->latest()
-        ->get();
+    public function debats()
+    {
+        $cards = Card::all();
+        $debats = Debat::withCount(['commentaires', 'votes'])
+            ->whereNotIn('statut', ['En attente', 'Rejeté'])
+            ->latest()
+            ->get();
 
-    return view('pages.debats', compact('debats', 'cards'));
-}
+        return view('pages.debats', compact('debats', 'cards'));
+    }
 
     // public function debat($debatId)
     // {
@@ -322,66 +322,65 @@ public function debats()
     // }
 
     public function debat($debatId)
-{
-    // Récupérer le débat avec ses relations nécessaires
-    $debat = Debat::with(['chats.user', 'commentaires.user'])
-        ->withCount(['commentaires', 'votes'])
-        ->findOrFail($debatId);
+    {
+        // Récupérer le débat avec ses relations nécessaires
+        $debat = Debat::with(['chats.user', 'commentaires.user'])
+            ->withCount(['commentaires', 'votes'])
+            ->findOrFail($debatId);
 
-    // Récupérer les derniers messages associés au débat
-    $messages = $debat->chats()->latest()->get();
+        // Récupérer les derniers messages associés au débat
+        $messages = $debat->chats()->latest()->get();
 
-    // Récupérer les commentaires validés avec les utilisateurs
-    $comments = $debat->commentaires()
-        ->where('valide', true)
-        ->with('user:id,name,email')
-        ->latest()
-        ->get();
+        // Récupérer les commentaires validés avec les utilisateurs
+        $comments = $debat->commentaires()
+            ->where('valide', true)
+            ->with('user:id,name,email')
+            ->latest()
+            ->get();
 
-    // Séparer les commentaires selon le choix "pour" ou "contre"
-    $forComments = $comments->where('choix', true);
-    // $againstComments = $comments->where('choix', false);
-    $againstComments = Commentaire::with(['user', 'replies.user', 'replies.replies.user']) // eager load nested
-    ->where('id_debat', $debatId)
-    ->where('valide', true)
-    ->where('choix', false)
-    ->whereNull('id_parent_commentaire') // only top-level comments
-    ->get();
+        // Séparer les commentaires selon le choix "pour" ou "contre"
+        $forComments = $comments->where('choix', true);
+        // $againstComments = $comments->where('choix', false);
+        $againstComments = Commentaire::with(['user', 'replies.user', 'replies.replies.user']) // eager load nested
+            ->where('id_debat', $debatId)
+            ->where('valide', true)
+            ->where('choix', false)
+            ->whereNull('id_parent_commentaire') // only top-level comments
+            ->get();
 
 
-    // Vérifier si l'utilisateur connecté a voté "pour"
-    $userHasVoted = Vote::where('id_debat', $debatId)
-        ->where('id_user', auth()->id())
-        ->where('choix', true)
-        ->exists();
+        // Vérifier si l'utilisateur connecté a voté "pour"
+        $userHasVoted = Vote::where('id_debat', $debatId)
+            ->where('id_user', auth()->id())
+            ->where('choix', true)
+            ->exists();
 
-    // Compter les likes et dislikes
-    $likesCount = Vote::where('id_debat', $debatId)
-        ->where('choix', true)
-        ->count();
+        // Compter les likes et dislikes
+        $likesCount = Vote::where('id_debat', $debatId)
+            ->where('choix', true)
+            ->count();
 
-    $dislikesCount = Vote::where('id_debat', $debatId)
-        ->where('choix', false)
-        ->count();
+        $dislikesCount = Vote::where('id_debat', $debatId)
+            ->where('choix', false)
+            ->count();
 
-    // Récupérer 5 débats récents sauf celui en cours
-    $recent_posts = Debat::where('id_debat', '!=', $debatId)
-        ->latest()
-        ->take(5)
-        ->get();
+        // Récupérer 5 débats récents sauf celui en cours
+        $recent_posts = Debat::where('id_debat', '!=', $debatId)
+            ->latest()
+            ->take(5)
+            ->get();
 
-    // Retourner la vue avec toutes les données
-    return view('pages.debat.show', compact(
-        'debat',
-        'likesCount',
-        'dislikesCount',
-        'userHasVoted',
-        'forComments',
-        'againstComments',
-        'recent_posts',
-        'messages',
-        'comments'
-    ));
-}
-
+        // Retourner la vue avec toutes les données
+        return view('pages.debat.show', compact(
+            'debat',
+            'likesCount',
+            'dislikesCount',
+            'userHasVoted',
+            'forComments',
+            'againstComments',
+            'recent_posts',
+            'messages',
+            'comments'
+        ));
+    }
 }
