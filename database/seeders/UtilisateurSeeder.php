@@ -8,7 +8,7 @@ class UtilisateurSeeder extends Seeder
 {
     public function run()
     {
-        \App\Models\User::factory(20)->create();
+        \App\Models\User::factory(2)->create();
     }
 }
 
