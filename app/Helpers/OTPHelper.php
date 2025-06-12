@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Mail\OTPMail;
 
+
 class OTPHelper {
     public static function generateOTP($email)
     {

@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         // Broadcast::routes();
+        require_once app_path('Helpers/OTPHelper.php');
         Broadcast::routes(['middleware' => 'auth:web']);
 
         require base_path('routes/channels.php');
