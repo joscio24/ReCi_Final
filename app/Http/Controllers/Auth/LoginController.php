@@ -88,6 +88,8 @@ class LoginController extends Controller
             //     // OTP generation or sending failed
             //     return back()->withErrors(['otp' => 'Failed to send OTP. Please try again.']);
             // }
+            $user = \App\Models\User::where('email', $request->email)->first();
+            Auth::login($user);
 
             return redirect()->route('/');
         }
