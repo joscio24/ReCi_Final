@@ -76,18 +76,20 @@ class LoginController extends Controller
 
         if ($user && \Hash::check($request->password, $user->password)) {
             // Attempt to generate and send OTP
-            $otpSent = OTPHelper::generateOTP($user->email);
+            // $otpSent = OTPHelper::generateOTP($user->email);
 
-            if ($otpSent) {
-                // Store email in session for OTP verification
-                session(['otp_email' => $user->email]);
+            // if ($otpSent) {
+            //     // Store email in session for OTP verification
+            //     session(['otp_email' => $user->email]);
 
-                // Redirect to OTP verification page
-                return redirect()->route('otp.verify.form');
-            } else {
-                // OTP generation or sending failed
-                return back()->withErrors(['otp' => 'Failed to send OTP. Please try again.']);
-            }
+            //     // Redirect to OTP verification page
+
+            // } else {
+            //     // OTP generation or sending failed
+            //     return back()->withErrors(['otp' => 'Failed to send OTP. Please try again.']);
+            // }
+
+            return redirect()->route('/');
         }
 
         return back()->withErrors(['email' => 'Invalid credentials.'])->withInput();
