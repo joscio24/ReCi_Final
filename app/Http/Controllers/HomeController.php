@@ -9,6 +9,7 @@ use App\Models\Link;
 use App\Models\Vote;
 use App\Models\Message;
 use App\Models\Commentaire;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -331,23 +332,12 @@ class HomeController extends Controller
         // Récupérer les derniers messages associés au débat
         $messages = $debat->chats()->latest()->get();
 
-        // Récupérer les commentaires validés avec les utilisateurs
-        $comments = $debat->commentaires()
-            ->where('valide', true)
-            ->with('user:id,name,email')
-            ->latest()
-            ->get();
+        // Récupérer les commentaires filtrés
+        $allComments = $this->getFilteredComments($debatId);
 
         // Séparer les commentaires selon le choix "pour" ou "contre"
-        $forComments = $comments->where('choix', true);
-        // $againstComments = $comments->where('choix', false);
-        $againstComments = Commentaire::with(['user', 'replies.user', 'replies.replies.user']) // eager load nested
-            ->where('id_debat', $debatId)
-            ->where('valide', true)
-            ->where('choix', false)
-            ->whereNull('id_parent_commentaire') // only top-level comments
-            ->get();
-
+        $forComments = $allComments;
+        $againstComments = $allComments->where('choix', false);
 
         // Vérifier si l'utilisateur connecté a voté "pour"
         $userHasVoted = Vote::where('id_debat', $debatId)
@@ -355,7 +345,7 @@ class HomeController extends Controller
             ->where('choix', true)
             ->exists();
 
-        // Compter les likes et dislikes
+        // Compter les votes
         $likesCount = Vote::where('id_debat', $debatId)
             ->where('choix', true)
             ->count();
@@ -370,7 +360,6 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        // Retourner la vue avec toutes les données
         return view('pages.debat.show', compact(
             'debat',
             'likesCount',
@@ -380,7 +369,58 @@ class HomeController extends Controller
             'againstComments',
             'recent_posts',
             'messages',
-            'comments'
+            'allComments'
         ));
+    }
+
+    private function getFilteredComments($debatId)
+    {
+        $blockedWords = ['idiot', 'insulte', 'abruti', '...']; // 📝 Personnalise cette liste
+
+        $comments = Commentaire::with(['user', 'replies.user', 'replies.replies.user'])
+            ->where('id_debat', $debatId)
+            ->where('valide', true)
+            ->whereNull('id_parent_commentaire')
+            ->withCount('likes')
+            ->orderByDesc('likes_count')
+            ->orderBy('created_at')
+            ->get();
+
+        // 🔍 Filtrage des mots interdits
+        $filtered = $comments->filter(function ($comment) use ($blockedWords) {
+            foreach ($blockedWords as $word) {
+                if (stripos($comment->contenu, $word) !== false) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        // 🧠 (Optionnel) Filtrage par IA (peut être désactivé temporairement)
+        $aiFiltered = $filtered->filter(function ($comment) {
+            return $this->isReasonableComment($comment->contenu);
+        });
+
+        return $aiFiltered->values();
+    }
+
+    private function isReasonableComment($commentText)
+    {
+        $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
+            'model' => 'gpt-4',
+            'messages' => [
+                ['role' => 'system', 'content' => 'Tu es un modérateur. Réponds uniquement par "oui" ou "non".'],
+                ['role' => 'user', 'content' => "Ce commentaire est-il raisonnable ? \"$commentText\""]
+            ],
+            'max_tokens' => 5,
+        ]);
+
+        if ($response->failed()) {
+            return true; // En cas d’erreur, on laisse passer le commentaire
+        }
+
+        $answer = strtolower($response['choices'][0]['message']['content']);
+
+        return str_contains($answer, 'oui');
     }
 }

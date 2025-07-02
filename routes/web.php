@@ -18,6 +18,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\PostCardController;
 use App\Events\Typing;
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\DebatController;
 
 Broadcast::routes(['middleware' => ['auth:sanctum']]); // Use 'auth' if not using Sanctum
@@ -53,11 +54,20 @@ Route::post('/otp-verify', [App\Http\Controllers\OTPVerificationController::clas
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
+Route::get('/test-openai', function () {
+    $response = Http::withToken(env('OPENAI_API_KEY'))->get('https://api.openai.com/v1/models');
+
+    return $response->json(); // Devrait afficher la liste des modèles
+});
+
+
+
 Route::middleware(['auth'])->group(function () {
     Route::post('/post-cards/{postCard}/messages', [MessageController::class, 'store'])->name('messages.store');
 
     Route::post('/post-cards/{postCard}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/comment/{id}/like', [CommentController::class, 'likeComment'])->middleware('auth');
+    Route::post('/comment/{id}/unlike', [CommentController::class, 'unlikeComment'])->middleware('auth');
     Route::post('/comment/{id}/reply', [CommentController::class, 'reply'])->middleware('auth');
 
     Route::post('/debats/{id_debat}/votes', [VoteController::class, 'store']);

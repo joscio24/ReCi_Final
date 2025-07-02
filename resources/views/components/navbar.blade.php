@@ -55,9 +55,7 @@
 
         <!-- Mobile Menu -->
         <ul class="mobile-menu d-md-none" id="mobileMenu">
-            <li><a href="/debats" class="menu-link">Débats</a></li>
-            <li><a href="#si" class="menu-link active" data-bs-toggle="modal"
-                    data-bs-target="#contributionModal">Soumettre une idée</a></li>
+            <li><a href="/debats" class="menu-link">Tous les Débats</a></li>
 
             @auth
 

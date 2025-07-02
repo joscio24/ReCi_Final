@@ -144,12 +144,43 @@ class CommentController extends Controller
         $comment = Commentaire::findOrFail($idComment);
         $user = auth()->user();
 
-        if ($comment->likes()->where('user_id', $user->id)->exists()) {
+        $alreadyLiked = $comment->likes()->where('user_id', $user->id)->exists();
+
+        if ($alreadyLiked) {
+            // Retirer le like
             $comment->likes()->detach($user->id);
-            return response()->json(['message' => 'Like retiré', 'liked' => false]);
+            return response()->json(['message' => 'Like retiré', 'liked' => false, 'unliked' => false]);
         } else {
+            // Ajouter le like
             $comment->likes()->attach($user->id);
-            return response()->json(['message' => 'Commentaire liké', 'liked' => true]);
+
+            // Supprimer un éventuel dislike
+            $comment->unlikes()->detach($user->id);
+
+            return response()->json(['message' => 'Commentaire liké', 'liked' => true, 'unliked' => false]);
+        }
+    }
+
+
+    public function unlikeComment($idComment)
+    {
+        $comment = Commentaire::findOrFail($idComment);
+        $user = auth()->user();
+
+        $alreadyUnliked = $comment->unlikes()->where('user_id', $user->id)->exists();
+
+        if ($alreadyUnliked) {
+            // Retirer l'unlike
+            $comment->unlikes()->detach($user->id);
+            return response()->json(['message' => 'Unlike retiré', 'liked' => false, 'unliked' => false]);
+        } else {
+            // Ajouter l'unlike
+            $comment->unlikes()->attach($user->id);
+
+            // Supprimer un éventuel like
+            $comment->likes()->detach($user->id);
+
+            return response()->json(['message' => 'Commentaire disliké', 'liked' => false, 'unliked' => true]);
         }
     }
 }

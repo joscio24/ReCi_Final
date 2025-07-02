@@ -28,23 +28,6 @@
             font-size: 14px;
         }
 
-        /* Comment Section Container */
-        /* .comment-section {
-                                                                                                                                                                    max-width: 700px;
-                                                                                                                                                                    margin: auto;
-                                                                                                                                                                    font-family: Arial, sans-serif;
-                                                                                                                                                                } */
-
-        /* Comment Box */
-        /* .comment {
-                                                                                                                                                                    display: flex;
-                                                                                                                                                                    align-items: flex-start;
-                                                                                                                                                                    background: #f9f9f9;
-                                                                                                                                                                    border-radius: 8px;
-                                                                                                                                                                    padding: 12px;
-                                                                                                                                                                    margin-bottom: 10px;
-                                                                                                                                                                    position: relative;
-                                                                                                                                                                } */
 
         .comment-holder {
             padding: 10px;
@@ -112,11 +95,6 @@
             gap: 10px;
         }
 
-        /* .reply-line {
-                                                                                                                                                            width: 2px;
-                                                                                                                                                            background-color: #ccc;
-                                                                                                                                                            margin-left: 10px;
-                                                                                                                                                        } */
 
         .reply-line {
             position: relative;
@@ -199,7 +177,7 @@
         }
 
         .like-btn i {
-            color: red;
+            color: rgb(0, 81, 255);
             font-size: 16px;
             transition: 0.3s ease;
         }
@@ -418,7 +396,7 @@
         }
 
         .like-btn i {
-            color: #f02849 !important;
+            color: #287bf0 !important;
         }
 
         .like-btn:hover,
@@ -468,9 +446,9 @@
             <div class="col-lg-8">
                 <article class="p-1">
                     <!-- <div class="card p-2">
-                                                                                                                                                                                                        <h1 class="mb-3">{{ $debat->title }}</h1>
+                                                                                                                                                                                                                                    <h1 class="mb-3">{{ $debat->title }}</h1>
 
-                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                </div> -->
                     <!-- <div class="post-img" style="background-image: url('/images{{ $debat->image }}'); "> -->
                     <div class="post-img" style="background-image: url('{{ Storage::url($debat->image) }}'); ">
 
@@ -526,9 +504,9 @@
                                 <div class="d-flex b -center mt-2" style="gap: 20px; justify-content: center;">
                                     <!-- "Pour" (Like) Button -->
                                     <div class="d-flex align-items-center">
-                                        <button class="btn btn-success d-flex align-items-center"
+                                        <button class="btn btn-default d-flex align-items-center"
                                             onclick="likeDebate({{ $debat->id_debat }}, true, {{ auth()->id() }});">
-                                            <i class="fas fa-thumbs-up m-1"></i> Je suis intéressé
+                                            <i class="fas fa-thumbs-up m-1"></i> J'aime
                                         </button>
                                         <span class="vote-count-box"
                                             id="like-count-{{ $debat->id_debat }}">{{ $likesCount }}</span>
@@ -536,9 +514,9 @@
 
                                     <!-- "Contre" (Dislike) Button -->
                                     <div class="d-flex align-items-center">
-                                        <button class="btn btn-danger d-flex align-items-center"
+                                        <button class="btn btn-default d-flex align-items-center"
                                             onclick="likeDebate({{ $debat->id_debat }}, false, {{ auth()->id() }});">
-                                            <i class="fas fa-thumbs-down  m-1"></i> Je ne suis pas intéressé
+                                            <i class="fas fa-thumbs-down  m-1"></i> Je n'aime pas'
                                         </button>
                                         <span hidden class="vote-count-box"
                                             id="dislike-count-{{ $debat->id_debat }}">{{ $dislikesCount ?? 0 }}</span>
@@ -596,7 +574,6 @@
                                                     $label .
                                                     '</button>';
                                             }
-
                                         }
 
                                         echo '</div>'; // close reply-content
@@ -604,16 +581,15 @@
                                         echo '</div>'; // close reply mt-2
                                         echo '</div>'; // close d-flex w-100
 
-
                                         echo '<form class="reply-form p-2 rounded border shadow-sm mt-2" data-comment-id="' .
-                                                $replyId .
-                                                '" style="display: none; background-color: #f5f5f5;">';
-                                            echo csrf_field();
-                                            echo '<div class="mb-2">';
-                                            echo '<input type="text" class="form-control reply-input w-100" name="reply_text" placeholder="Votre réponse..." required>';
-                                            echo '</div>';
-                                            echo '<button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-send"></i> Envoyer</button>';
-                                            echo '</form>';
+                                            $replyId .
+                                            '" style="display: none; background-color: #f5f5f5;">';
+                                        echo csrf_field();
+                                        echo '<div class="mb-2">';
+                                        echo '<input type="text" class="form-control reply-input w-100" name="reply_text" placeholder="Votre réponse..." required>';
+                                        echo '</div>';
+                                        echo '<button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-send"></i> Envoyer</button>';
+                                        echo '</form>';
                                         if ($reply->replies->count()) {
                                             $replyId = $reply->id_commentaire;
                                             echo '<div class="replies collapse" id="replies-' .
@@ -628,11 +604,11 @@
                                 }
                             @endphp
 
-                            <div class="col-md-6">
-                                <h3
+                            <div class="col-md-12">
+                                {{-- <h3 hidden
                                     class="text-success fw-bold text-uppercase text-center display-7 mb-4 position-relative d-inline-block">
                                     <span class="border-bottom border-3 border-success pb-1">Pour</span>
-                                </h3>
+                                </h3> --}}
 
                                 <div class="comment-section card"
                                     style="overflow: auto !important; scrollbar-width: none !important; {{ count($forComments) > 0 ? 'height: 400px !important;' : 'height: 100px !important;' }}">
@@ -649,11 +625,24 @@
                                                         <span
                                                             class="text-muted date d-block mb-2">{{ $comment->date_commentaire }}</span>
 
-                                                        <button class="like-btn btn btn-sm btn-outline-danger me-2"
-                                                            data-comment-id="{{ $comment->id_commentaire }}">
-                                                            <i class="fi fi-rr-heart"></i> <span
-                                                                class="like-count">{{ $comment->likes->count() }}</span>
-                                                        </button>
+                                                        <div class="d-flex justify-content-between">
+                                                            @php
+                                                                $isGuest = auth()->guest();
+                                                            @endphp
+                                                            <button
+                                                                @if ($isGuest) disabled title="Connectez-vous pour réagir" @endif
+                                                                class="like-btn btn btn-sm btn-outline-primary me-2"
+                                                                data-comment-id="{{ $comment->id_commentaire }}">
+                                                                <i class="fa fa-thumbs-up"></i> <span
+                                                                    class="like-count">{{ $comment->likes->count() }}</span>
+                                                            </button>
+
+                                                            <button class="like-bt unlike-2 btn btn-sm  me-2"
+                                                                data-comment-id="{{ $comment->id_commentaire }}">
+                                                                <i class="fa fa-thumbs-down"></i> <span
+                                                                    class="unlike-count">{{ $comment->unlikes->count() }}</span>
+                                                            </button>
+                                                        </div>
 
                                                         @auth
                                                             <button class="reply-btn btn btn-sm btn-outline-primary me-2"
@@ -702,146 +691,7 @@
 
 
 
-                            <!-- Right Column: "Against" Comments -->
-                            <div class="col-md-6">
-                                <h3
-                                    class="text-danger fw-bold text-uppercase text-center display-7 mb-4 position-relative d-inline-block">
-                                    <span class="border-bottom border-3 border-danger pb-1">Contre</span>
-                                </h3>
 
-                                <div class="comment-section card"
-                                    style="overflow: auto !important; scrollbar-width: none !important; {{ count($againstComments) > 0 ? 'height: 400px !important;' : 'height: 100px !important;' }}">
-                                    @if (count($againstComments) > 0)
-                                        @foreach ($againstComments as $comment)
-                                            <div class="comment-holder p-3 border-bottom">
-                                                <div class="comment d-flex">
-                                                    <span class="user-icon me-3">
-                                                        <i class="fi fi-rr-user fs-4"></i>
-                                                    </span>
-                                                    <div class="comment-content">
-                                                        <h5 class="username mb-1">{{ $comment->user->name }}</h5>
-                                                        <p class="comment-message mb-1">{{ $comment->texte }}</p>
-                                                        <span
-                                                            class="text-muted date d-block mb-2">{{ $comment->date_commentaire }}</span>
-
-                                                        <button class="like-btn btn btn-sm btn-outline-danger me-2"
-                                                            data-comment-id="{{ $comment->id_commentaire }}">
-                                                            <i class="fi fi-rr-heart"></i> <span
-                                                                class="like-count">{{ $comment->likes->count() }}</span>
-                                                        </button>
-
-                                                        @auth
-                                                            <button class="reply-btn btn btn-sm btn-outline-primary me-2"
-                                                                data-comment-id="{{ $comment->id_commentaire }}">
-                                                                Répondre
-                                                            </button>
-                                                            @if ($comment->replies->count() > 0)
-                                                                <button
-                                                                    class="toggle-replies-btn reply-btn btn btn-link p-0 m-1"
-                                                                    data-target="#replies-{{ $comment->id_commentaire }}">
-                                                                    Voir {{ $comment->replies->count() }}
-                                                                    réponse{{ $comment->replies->count() > 1 ? 's' : '' }}
-                                                                </button>
-                                                            @endif
-                                                        @endauth
-                                                    </div>
-                                                </div>
-
-                                                <form class="reply-form p-3 rounded border shadow-sm mt-2"
-                                                    data-comment-id="{{ $comment->id_commentaire }}"
-                                                    style="display: none !important; background-color: #f9f9f9 !important;">
-                                                    @csrf
-                                                    <div class="mb-2">
-                                                        <input type="text" class="form-control reply-input w-100"
-                                                            name="reply_text" placeholder="Votre réponse..." required>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-sm btn-primary">
-                                                        <i class="bi bi-send"></i> Envoyer
-                                                    </button>
-                                                </form>
-
-                                                <!-- Replies -->
-                                                <div id="replies-{{ $comment->id_commentaire }}"
-                                                    class="replies collapse mt-2 ps-4 border-start"
-                                                    style="border-color: #ccc !important;">
-                                                    @php
-                                                        function renderReplies($replies)
-                                                        {
-                                                            foreach ($replies as $reply) {
-                                                                echo '<div class="d-flex w-100">';
-                                                                echo '<div class="reply-line"></div>';
-                                                                echo '<div class="reply mt-2">';
-                                                                echo '<div class="reply-box">';
-                                                                echo '<span class="user-icon"><i class="fi fi-rr-user"></i></span>';
-                                                                echo '<div class="reply-content">';
-                                                                echo '<h6 class="username">' .
-                                                                    $reply->user->name .
-                                                                    '</h6>';
-                                                                echo '<p class="comment-message">' .
-                                                                    $reply->texte .
-                                                                    '</p>';
-                                                                echo '<span class="text-muted date">' .
-                                                                    $reply->date_commentaire .
-                                                                    '</span>';
-
-                                                                if (auth()->check()) {
-                                                                    $replyId = $reply->id_commentaire;
-                                                                    $replyCount = $reply->replies->count();
-                                                                    $label =
-                                                                        "Voir {$replyCount} réponse" .
-                                                                        ($replyCount > 1 ? 's' : '');
-
-                                                                    echo '
-                                                                        <button class="reply-btn btn btn-sm btn-outline-secondary mt-1" data-comment-id="' .
-                                                                        $replyId .
-                                                                        '">
-                                                                         Répondre
-                                                                      </button>
-                                                                         <button class="reply-btn toggle-replies-rep-btn btn btn-link p-0 mt-2" data-target="#replies-' .
-                                                                        $replyId .
-                                                                        '">
-                                                                              ' .
-                                                                        $label .
-                                                                        '
-                                                                                </button>
-                                                                            ';
-                                                                }
-
-                                                                echo '</div></div></div></div>';
-                                                                echo '<form class="reply-form p-2 rounded border shadow-sm mt-2" data-comment-id="' .
-                                                                    $reply->id_commentaire .
-                                                                    '" style="display: none; background-color: #f5f5f5;">';
-                                                                echo csrf_field();
-                                                                echo '<div class="mb-2">';
-                                                                echo '<input type="text" autofocus  class="form-control reply-input w-100" name="reply_text" placeholder="Votre réponse..." required>';
-                                                                echo '</div>';
-                                                                echo '<button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-send"></i> Envoyer</button>';
-                                                                echo '</form>';
-                                                                if ($reply->replies->count()) {
-                                                                    $replyId = $reply->id_commentaire;
-                                                                    echo '<div class="replies collapse" id="replies-' .
-                                                                        $replyId .
-                                                                        '" data-target="replies-' .
-                                                                        $replyId .
-                                                                        '">';
-                                                                    renderReplies($reply->replies);
-                                                                    echo '</div>';
-                                                                }
-                                                            }
-                                                        }
-                                                        renderReplies($comment->replies);
-                                                    @endphp
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        <div class="text-center h-100 w-100 d-flex"
-                                            style="flex-direction: column !important; justify-content: center !important;">
-                                            <p>Aucun commentaire</p>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
                         </div>
                     </section>
 
@@ -864,7 +714,8 @@
                         @guest
                             <div class="mb-3">
                                 <label for="comment-name" class="form-label">Nom</label>
-                                <input type="text" name="name" class="form-control" placeholder="Nom et Prénom" required>
+                                <input type="text" name="name" class="form-control" placeholder="Nom et Prénom"
+                                    required>
                             </div>
                             <div class="mb-3">
                                 <label for="comment-email" class="form-label">Email</label>
@@ -873,7 +724,14 @@
                         @endguest
                         <div class="mb-3">
                             <label for="comment-content" class="form-label">Commentaire</label>
-                            <textarea name="content" class="form-control" rows="4" placeholder="Votre commentaire" required></textarea>
+                            <div class="position-relative">
+                                <textarea id="comment-content" name="content" class="form-control" rows="4" placeholder="Votre commentaire"
+                                    required data-bs-toggle="tooltip" data-bs-placement="top" ></textarea>
+
+                                <small id="hashword-warning" class="text-danger mt-1 d-none">
+                                    ⚠️ Des mots interdits ont été détectés.
+                                </small>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Soumettre</button>
                     </form>
@@ -981,8 +839,8 @@
                                                 <!-- Camera Button -->
 
                                                 <!-- <button type="button" id="camera-button" class="btn btn-light btn-icon me-1" style="width: 40px; height: 40px;">
-                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="fas fa-camera text-muted"></i>
-                                                                                                                                                                                                                                                                                                                                                                                                                                </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fas fa-camera text-muted"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
                                                 <!-- Photo Upload Input -->
                                                 <!-- <input type="file" id="photo-upload" name="photo" style="display: none;"> -->
 
@@ -991,7 +849,7 @@
 
 
                                                 <!-- <a class="ms-1 text-muted" href="javascript:void(0);" id="attachment-button"><i class="fas fa-paperclip"></i></a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
 
                                                 <!-- <a class="ms-3 text-muted" href="javascript:void(0);" id="emoji-button"><i class="fas fa-smile"></i></a> -->
                                                 <button class="ms-3 btn btn-primary border-none" type="submit"
@@ -1066,6 +924,73 @@
             </div>
         </div>
     </div>
+
+
+
+    {{-- AI control system --}}
+
+    <script>
+        let blockedWords = [];
+
+        const textarea = document.getElementById("comment-content");
+        const tooltip = new bootstrap.Tooltip(textarea);
+        tooltip.disable();
+        fetch("/blocked_words.json")
+            .then(response => response.json())
+            .then(data => {
+                blockedWords = data.blocked_words;
+
+                // const textarea = document.getElementById("comment-content");
+                const warning = document.getElementById("hashword-warning");
+                // const tooltip = new bootstrap.Tooltip(textarea);
+                tooltip.disable();
+
+                textarea.addEventListener("input", function() {
+                    const value = textarea.value.toLowerCase();
+                    const hasBlockedWord = blockedWords.some(word => value.includes(word));
+
+                    if (hasBlockedWord) {
+                        tooltip.enable();
+                        textarea.classList.add("is-invalid");
+                        warning.classList.remove("d-none");
+                    } else {
+                        tooltip.disable();
+                        textarea.classList.remove("is-invalid");
+                        warning.classList.add("d-none");
+                    }
+                });
+            });
+
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const textarea = document.getElementById("comment-content");
+            const warning = document.getElementById("hashword-warning");
+
+            // Activer le tooltip Bootstrap
+            const tooltip = new bootstrap.Tooltip(textarea);
+
+            textarea.addEventListener("input", function() {
+                const value = textarea.value.toLowerCase();
+                const hasBlockedWord = blockedWords.some(word => value.includes(word));
+
+                if (hasBlockedWord) {
+                    tooltip.enable();
+                    textarea.classList.add("is-invalid");
+                    warning.classList.remove("d-none");
+                } else {
+                    tooltip.disable();
+                    textarea.classList.remove("is-invalid");
+                    warning.classList.add("d-none");
+                }
+            });
+
+            // Désactiver le tooltip au départ
+            tooltip.disable();
+        });
+    </script>
+
+    {{-- AI control system --}}
 
 
 
@@ -1147,6 +1072,30 @@
                         });
                 });
             });
+
+            //unlike-2
+            document.querySelectorAll(".unlike-2").forEach(button => {
+                button.addEventListener("click", function() {
+                    let commentId = this.getAttribute("data-comment-id");
+                    let likeCountSpan = this.querySelector(".unlike-count");
+
+                    fetch(`/comment/${commentId}/unlike`, {
+                            method: "POST",
+                            headers: {
+                                "X-CSRF-TOKEN": document.querySelector(
+                                    'meta[name="csrf-token"]').content,
+                                "Content-Type": "application/json"
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            likeCountSpan.textContent = data.liked ? (parseInt(likeCountSpan
+                                    .textContent)) + 1 : (parseInt(likeCountSpan.textContent)) -
+                                1;
+                        });
+                });
+            });
+
 
             // Handle Reply Form Toggle
             // document.querySelectorAll(".reply-btn").forEach(button => {
