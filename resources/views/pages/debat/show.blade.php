@@ -1371,18 +1371,18 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    const likeIcon = document.querySelector(`#likeIcon`);
+                    // const likeIcon = document.querySelector(`#likeIcon`);
                     const likeCountElement = document.getElementById(`like-count-${debatId}`);
 
-                    if (data.vote) {
-                        // Vote added or updated
-                        likeIcon.classList.remove('fi-rr-heart');
-                        likeIcon.classList.add('fi-sr-heart', 'text-primary');
-                    } else {
-                        // Vote removed
-                        likeIcon.classList.remove('fi-sr-heart', 'text-primary');
-                        likeIcon.classList.add('fi-rr-heart');
-                    }
+                    // if (data.vote) {
+                    //     // Vote added or updated
+                    //     likeIcon.classList.remove('fi-rr-heart');
+                    //     likeIcon.classList.add('fi-sr-heart', 'text-primary');
+                    // } else {
+                    //     // Vote removed
+                    //     likeIcon.classList.remove('fi-sr-heart', 'text-primary');
+                    //     likeIcon.classList.add('fi-rr-heart');
+                    // }
 
                     // Update likes count
                     likeCountElement.textContent = data.likes_count;
