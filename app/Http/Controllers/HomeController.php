@@ -379,7 +379,6 @@ class HomeController extends Controller
 
         $comments = Commentaire::with(['user', 'replies.user', 'replies.replies.user'])
             ->where('id_debat', $debatId)
-            ->where('valide', true)
             ->whereNull('id_parent_commentaire')
             ->withCount('likes')
             ->orderByDesc('likes_count')

@@ -248,6 +248,7 @@
             padding: 8px;
             margin-bottom: 6px;
             position: relative;
+            width: 100%;
         }
 
         /* User Icon in Reply */
@@ -324,6 +325,16 @@
             border-radius: 2px;
         }
 
+        h3.text-dark::after {
+            content: ' ';
+            display: block;
+            height: 4px;
+            width: 60%;
+            background-color: #050505;
+            margin: 0 auto;
+            margin-top: 5px;
+            border-radius: 2px;
+        }
 
         h3.text-success {
             letter-spacing: 2px;
@@ -439,6 +450,15 @@
             border-left: 2px solid #e4e6eb !important;
             margin-right: 8px !important;
         }
+
+        .border-underline {
+            border-bottom: 3px solid #011326;
+            /* You can change the color */
+            display: inline-block;
+            padding-bottom: 4px;
+            margin-bottom: 3rem;
+            /* Adjust spacing from text to underline */
+        }
     </style>
     <div class="container my-4">
         <div class="row">
@@ -446,9 +466,9 @@
             <div class="col-lg-8">
                 <article class="p-1">
                     <!-- <div class="card p-2">
-                                                                                                                                                                                                                                    <h1 class="mb-3">{{ $debat->title }}</h1>
+                                                                                                                                                                                                                                                                <h1 class="mb-3">{{ $debat->title }}</h1>
 
-                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                            </div> -->
                     <!-- <div class="post-img" style="background-image: url('/images{{ $debat->image }}'); "> -->
                     <div class="post-img" style="background-image: url('{{ Storage::url($debat->image) }}'); ">
 
@@ -460,66 +480,89 @@
 
                     <div class="card p-2">
                         <div class="row align-items-center">
-                            <!-- Like Button -->
 
-                            <p>Proposé par: <strong>{{ $debat->user->name }}</strong> |
+                            <p>
+                                Proposé par: <strong>{{ $debat->user->name }}</strong> |
                                 {{ \Carbon\Carbon::parse($debat->created_at)->translatedFormat('d F Y') }}
                             </p>
-                            <div class="col-auto m-1">
 
-                                <div class="icon-with-badge d-flex b b -center " style="jusyify-content:center; ">
-                                    <!-- voter -->
+                            <!-- Vote icon -->
+                            {{-- <div class="col-auto m-1">
+                                <div class="icon-with-badge d-flex align-items-center justify-content-center">
                                     <span class="me-3 d-icon" style="cursor: pointer;">
                                         <i id="likeIcon"
-                                            class="fi  like-button {{ $userHasVoted ? 'fi-sr-heart text-primary' : 'fi-rr-heart' }}"
+                                            class="fi like-button {{ $userHasVoted ? 'fi-sr-heart text-primary' : 'fi-rr-heart' }}"
                                             onclick="likeDebate({{ $debat->id_debat }}, true, {{ auth()->id() }});"></i>
                                     </span>
-
-                                    <span class="badge like-count"
-                                        id="like-count-{{ $debat->id_debat }}">{{ $debat->votes_count }}</span>
+                                    <span class="badge like-count" id="like-count-{{ $debat->id_debat }}">
+                                        {{ $debat->votes_count }}
+                                    </span>
                                 </div>
+                            </div> --}}
+
+
+                            <div class="col-auto">
+                                <button type="button" class="btn btn- position-relative"
+                                    style="background-color: #d6d9de;">
+                                    <i id=""
+                                        class="fi like-button {{ $userHasVoted ? 'fi-sr-heart text-primary' : 'fi-rr-heart' }}"
+                                        onclick="likeDebate({{ $debat->id_debat }}, true, {{ auth()->id() }});"></i>
+                                    {{ $userHasVoted ? 'J\'aime déjà' : 'Like(s)' }}
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
+                                        id="like-count-{{ $debat->id_debat }}">
+                                        {{ $debat->votes_count }}
+                                    </span>
+                                </button>
                             </div>
 
-                            <!-- <span style="width: 50px;"></span> -->
-                            <!-- Comment Count -->
+                            <!-- Comment Count Button -->
+
                             <div class="col-auto">
-                                <div class="icon-with-badge">
-                                    <span class="me-3 d-icon">
-                                        <i class="fi fi-rr-messages"></i>
+                                <button type="button" class="btn btn- position-relative"
+                                    style="background-color: #d6d9de;">
+                                    <i class="fi fi-rr-messages "></i> Commentaire(s)
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+                                        {{ $debat->commentaires_count }}
                                     </span>
-                                    <span class="badge">{{ $debat->commentaires_count }}</span>
-                                </div>
+                                </button>
                             </div>
 
                             <!-- Share Icon -->
                             <div class="col-auto">
-                                <div class="icon-with-badge">
-                                    <span class="me-3 d-icon" onclick="openShareModal()">
-                                        <i class="fi fi-rr-share"></i>
-                                    </span>
-                                </div>
+                                <button class="btn text-center d-flex align-items-center" onclick="openShareModal()"
+                                    style="background-color: #d6d9de;">
+                                    <i class="fi fi-rr-share me-1"></i>
+                                    Partager
+                                </button>
                             </div>
 
+                            <!-- Like / Dislike Buttons -->
                             <div class="col-auto {{ $userHasVoted }} mb-2">
-                                <div class="d-flex b -center mt-2" style="gap: 20px; justify-content: center;">
+                                <div class="d-flex align-items-center mt-2" style="gap: 20px;">
                                     <!-- "Pour" (Like) Button -->
                                     <div class="d-flex align-items-center">
                                         <button class="btn btn-default d-flex align-items-center"
+                                            style="background-color: #d6d9de;"
                                             onclick="likeDebate({{ $debat->id_debat }}, true, {{ auth()->id() }});">
-                                            <i class="fas fa-thumbs-up m-1"></i> J'aime
+                                            <i class="fas fa-thumbs-up m-1"></i>
                                         </button>
-                                        <span class="vote-count-box"
-                                            id="like-count-{{ $debat->id_debat }}">{{ $likesCount }}</span>
+                                        <span class="vote-count-box" id="like-count-{{ $debat->id_debat }}">
+                                            {{ $likesCount }}
+                                        </span>
                                     </div>
 
                                     <!-- "Contre" (Dislike) Button -->
                                     <div class="d-flex align-items-center">
                                         <button class="btn btn-default d-flex align-items-center"
+                                            style="background-color: #d6d9de;"
                                             onclick="likeDebate({{ $debat->id_debat }}, false, {{ auth()->id() }});">
-                                            <i class="fas fa-thumbs-down  m-1"></i> Je n'aime pas'
+                                            <i class="fas fa-thumbs-down m-1"></i>
                                         </button>
-                                        <span hidden class="vote-count-box"
-                                            id="dislike-count-{{ $debat->id_debat }}">{{ $dislikesCount ?? 0 }}</span>
+                                        <span hidden class="vote-count-box" id="dislike-count-{{ $debat->id_debat }}">
+                                            {{ $dislikesCount ?? 0 }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -530,13 +573,17 @@
 
 
 
+
                     <!-- /images{{ $debat->image }} -->
 
                 </article>
                 <!-- Comment Section -->
                 <section id="comments" class="mt-4">
-                    <h2>Commentaires</h2>
 
+                    <h3
+                        class="text-dark fw-bold text-uppercase text-center display-7 mb-4 position-relative d-inline-block">
+                        <span class="border-bottom border-3 border-dark pb-1">Commentaires</span>
+                    </h3>
 
                     <section id="comments" class="mt-4">
                         <div class="row mb-2">
@@ -558,12 +605,12 @@
                                             htmlspecialchars($reply->date_commentaire) .
                                             '</span>';
 
+                                        $replyId = $reply->id_commentaire;
                                         if (auth()->check()) {
-                                            $replyId = $reply->id_commentaire;
                                             $replyCount = $reply->replies->count();
                                             $label = "Voir {$replyCount} réponse" . ($replyCount > 1 ? 's' : '');
 
-                                            echo '<button class="reply-btn btn btn-sm btn-outline-secondary mt-1" data-comment-id="' .
+                                            echo '<button class="reply-btn btn btn-sm d-flex justify-content-start border-none mt-1" data-comment-id="' .
                                                 $replyId .
                                                 '">Répondre</button>';
 
@@ -611,7 +658,7 @@
                                 </h3> --}}
 
                                 <div class="comment-section card"
-                                    style="overflow: auto !important; scrollbar-width: none !important; {{ count($forComments) > 0 ? 'height: 400px !important;' : 'height: 100px !important;' }}">
+                                    style="overflow: auto !important; scrollbar-width: none !important; {{ count($forComments) > 0 ? 'height: 600px !important;' : 'height: 100px !important;' }}">
                                     @if (count($forComments) > 0)
                                         @foreach ($forComments as $comment)
                                             <div class="comment-holder p-3 border-bottom">
@@ -637,7 +684,9 @@
                                                                     class="like-count">{{ $comment->likes->count() }}</span>
                                                             </button>
 
-                                                            <button class="like-bt unlike-2 btn btn-sm  me-2"
+                                                            <button
+                                                                @if ($isGuest) disabled title="Connectez-vous pour réagir" @endif
+                                                                class="like-bt unlike-2 btn btn-sm  me-2"
                                                                 data-comment-id="{{ $comment->id_commentaire }}">
                                                                 <i class="fa fa-thumbs-down"></i> <span
                                                                     class="unlike-count">{{ $comment->unlikes->count() }}</span>
@@ -726,14 +775,14 @@
                             <label for="comment-content" class="form-label">Commentaire</label>
                             <div class="position-relative">
                                 <textarea id="comment-content" name="content" class="form-control" rows="4" placeholder="Votre commentaire"
-                                    required data-bs-toggle="tooltip" data-bs-placement="top" ></textarea>
+                                    required data-bs-toggle="tooltip" data-bs-placement="top"></textarea>
 
                                 <small id="hashword-warning" class="text-danger mt-1 d-none">
                                     ⚠️ Des mots interdits ont été détectés.
                                 </small>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Soumettre</button>
+                        <button type="submit" id="send_comment" class="btn btn-primary">Soumettre</button>
                     </form>
 
                 </section>
@@ -839,8 +888,8 @@
                                                 <!-- Camera Button -->
 
                                                 <!-- <button type="button" id="camera-button" class="btn btn-light btn-icon me-1" style="width: 40px; height: 40px;">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fas fa-camera text-muted"></i>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="fas fa-camera text-muted"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button> -->
                                                 <!-- Photo Upload Input -->
                                                 <!-- <input type="file" id="photo-upload" name="photo" style="display: none;"> -->
 
@@ -849,7 +898,7 @@
 
 
                                                 <!-- <a class="ms-1 text-muted" href="javascript:void(0);" id="attachment-button"><i class="fas fa-paperclip"></i></a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
 
                                                 <!-- <a class="ms-3 text-muted" href="javascript:void(0);" id="emoji-button"><i class="fas fa-smile"></i></a> -->
                                                 <button class="ms-3 btn btn-primary border-none" type="submit"
@@ -934,6 +983,7 @@
 
         const textarea = document.getElementById("comment-content");
         const tooltip = new bootstrap.Tooltip(textarea);
+        const send_comment = document.getElementById("send_comment");
         tooltip.disable();
         fetch("/blocked_words.json")
             .then(response => response.json())
@@ -953,10 +1003,13 @@
                         tooltip.enable();
                         textarea.classList.add("is-invalid");
                         warning.classList.remove("d-none");
+                        send_comment.disabled = true;
+                        send_comment.style.cursor = 'not-allowed';
                     } else {
                         tooltip.disable();
                         textarea.classList.remove("is-invalid");
                         warning.classList.add("d-none");
+                        send_comment.disabled = false;
                     }
                 });
             });
