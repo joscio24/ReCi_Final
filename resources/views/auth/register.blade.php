@@ -18,7 +18,9 @@
             <!-- Right Section with Form -->
             <div class="col-md-5 p-5">
                 <div class="text-center">
-                    <img id="logo-img" src="/images/logo_reci_noir.png" alt="Logo" class="mb-3" style="width: 100px;" />
+                    <a href="https://mon.reci.bj"><img id="logo-img" src="/images/logo_reci_noir.png" alt="Logo" class="mb-3" style="width: 100px;" /></a>
+
+                    {{-- <img id="logo-img" src="/images/logo_reci_noir.png" alt="Logo" class="mb-3" style="width: 100px;" /> --}}
                     <h5 class="mb-3" style="font-weight: 600;">Créer un compte</h5>
                 </div>
                 <form method="POST" action="{{ route('register') }}" class="row g-3">
