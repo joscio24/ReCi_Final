@@ -170,17 +170,17 @@
             color: #888;
             cursor: pointer;
             font-size: 14px;
-            margin-top: 6px;
+            /* margin-top: 6px; */
             display: flex;
             align-items: center;
             gap: 5px;
         }
 
-        .like-btn i {
+        /* .like-btn i {
             color: rgb(0, 81, 255);
             font-size: 16px;
             transition: 0.3s ease;
-        }
+        } */
 
         .like-btn:hover i {
             transform: scale(1.2);
@@ -406,9 +406,9 @@
             cursor: pointer !important;
         }
 
-        .like-btn i {
+        /* .like-btn i {
             color: #287bf0 !important;
-        }
+        } */
 
         .like-btn:hover,
         .reply-btn:hover,
@@ -988,15 +988,15 @@
                                                 </div>
                                                 <p class="mb-1">{{ $comment->texte }}</p>
                                                 <div class="d-flex align-items-center gap-3">
-                                                    <button class="btn btn-sm p-0 text-muted"
+                                                    <button class="like-btn btn btn-sm p-0 text-muted" data-comment-id="{{ $comment->id_commentaire }}"
                                                         @if (auth()->guest()) disabled @endif>
                                                         <i class="fa fa-thumbs-up me-1 fs-5"></i>
-                                                        <span>{{ $comment->likes->count() }}</span>
+                                                        <span class="like-count">{{ $comment->likes->count() }}</span>
                                                     </button>
-                                                    <button class="btn btn-sm p-0 text-muted"
+                                                    <button class="like-bt unlike-2 btn btn-sm p-0 text-muted" data-comment-id="{{ $comment->id_commentaire }}"
                                                         @if (auth()->guest()) disabled @endif>
                                                         <i class="fa fa-thumbs-down me-1 fs-5"></i>
-                                                        <span>{{ $comment->unlikes->count() }}</span>
+                                                        <span class="unlike-count">{{ $comment->unlikes->count() }}</span>
                                                     </button>
                                                     @auth
                                                         <button class="btn btn-sm text-primary reply-btn"
