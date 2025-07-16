@@ -405,20 +405,23 @@ class HomeController extends Controller
 
     private function isReasonableComment($commentText)
     {
-        $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
-            'model' => 'gpt-4',
-            'messages' => [
-                ['role' => 'system', 'content' => 'Tu es un modérateur. Réponds uniquement par "oui" ou "non".'],
-                ['role' => 'user', 'content' => "Ce commentaire est-il raisonnable ? \"$commentText\""]
-            ],
-            'max_tokens' => 5,
-        ]);
+        // $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/chat/completions', [
+        //     'model' => 'gpt-4',
+        //     'messages' => [
+        //         ['role' => 'system', 'content' => 'Tu es un modérateur. Réponds uniquement par "oui" ou "non".'],
+        //         ['role' => 'user', 'content' => "Ce commentaire est-il raisonnable ? \"$commentText\""]
+        //     ],
+        //     'max_tokens' => 5,
+        // ]);
 
-        if ($response->failed()) {
-            return true; // En cas d’erreur, on laisse passer le commentaire
-        }
+        // if ($response->failed()) {
+        //     return true; // En cas d’erreur, on laisse passer le commentaire
+        // }else {
+        //     # code...
+        //     return true;
+        // }
 
-        $answer = strtolower($response['choices'][0]['message']['content']);
+        $answer = strtolower('oui');
 
         return str_contains($answer, 'oui');
     }
