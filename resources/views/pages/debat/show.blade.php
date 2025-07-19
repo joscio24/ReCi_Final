@@ -177,10 +177,10 @@
         }
 
         /* .like-btn i {
-            color: rgb(0, 81, 255);
-            font-size: 16px;
-            transition: 0.3s ease;
-        } */
+                                        color: rgb(0, 81, 255);
+                                        font-size: 16px;
+                                        transition: 0.3s ease;
+                                    } */
 
         .like-btn:hover i {
             transform: scale(1.2);
@@ -407,8 +407,8 @@
         }
 
         /* .like-btn i {
-            color: #287bf0 !important;
-        } */
+                                        color: #287bf0 !important;
+                                    } */
 
         .like-btn:hover,
         .reply-btn:hover,
@@ -442,7 +442,7 @@
             font-weight: 500px !important;
             /* color: #1877f2 !important; */
             /* font-size: 13px !important;
-                                                                    margin-top: 6px !important; */
+                                                                                                margin-top: 6px !important; */
             text-decoration: none;
         }
 
@@ -730,6 +730,8 @@
             border-radius: 0 0 0 8px;
             transform: translate(-05.3%, 50%);
         }
+
+        /*  */
     </style>
     <div class="container my-4">
         <div class="row">
@@ -737,9 +739,9 @@
             <div class="col-lg-8">
                 <article class="p-1">
                     <!-- <div class="card p-2">
-                                                                                                                                                                                                                                                                                                                                                                <h1 class="mb-3">{{ $debat->title }}</h1>
+                                                                                                                                                                                                                                                                                                                                                                                            <h1 class="mb-3">{{ $debat->title }}</h1>
 
-                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                     <!-- <div class="post-img" style="background-image: url('/images{{ $debat->image }}'); "> -->
                     <div class="post-img" style="background-image: url('{{ Storage::url($debat->image) }}'); ">
 
@@ -760,7 +762,7 @@
 
 
 
-                            <div class="col-auto">
+                            {{-- <div class="col-auto">
                                 <button type="button" class="btn btn- position-relative"
                                     style="background-color: #d6d9de;">
                                     <i id=""
@@ -773,29 +775,13 @@
                                         {{ $debat->votes_count }}
                                     </span>
                                 </button>
-                            </div>
+                            </div> --}}
 
                             <!-- Comment Count Button -->
 
-                            <div class="col-auto">
-                                <button type="button" class="btn btn- position-relative"
-                                    style="background-color: #d6d9de;">
-                                    <i class="fi fi-rr-messages "></i> Commentaire(s)
-                                    <span
-                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                                        {{ $debat->commentaires_count }}
-                                    </span>
-                                </button>
-                            </div>
 
-                            <!-- Share Icon -->
-                            <div class="col-auto">
-                                <button class="btn text-center d-flex align-items-center" onclick="openShareModal()"
-                                    style="background-color: #d6d9de;">
-                                    <i class="fi fi-rr-share me-1"></i>
-                                    Partager
-                                </button>
-                            </div>
+
+
 
                             <!-- Like / Dislike Buttons -->
                             <div class="col-auto {{ $userHasVoted }} mb-2">
@@ -822,6 +808,27 @@
                                         <span hidden class="vote-count-box" id="dislike-count-{{ $debat->id_debat }}">
                                             {{ $dislikesCount ?? 0 }}
                                         </span>
+                                    </div>
+
+
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn- position-relative"
+                                            style="background-color: #d6d9de;">
+                                            <i class="fi fi-rr-messages "></i> Commentaire(s)
+                                            <span
+                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+                                                {{ $debat->commentaires_count }}
+                                            </span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Share Icon -->
+                                    <div class="col-auto">
+                                        <button class="btn text-center d-flex align-items-center" onclick="openShareModal()"
+                                            style="background-color: #d6d9de;">
+                                            <i class="fi fi-rr-share me-1"></i>
+                                            Partager
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -956,110 +963,139 @@
                                     </small>
                                 </div>
 
-                                <button type="submit" id="send_comment" class="btn btn-dark send-btn px-2">
+                                <button type="submit" id="send_comment" class="btn btn-ark send-btn px-2">
                                     <i class="bi bi-send-fill fs-5 text-dark"></i>
                                 </button>
                             </div>
                         @else
-                            <div class="text-center mt-0 w-100">
-                                <a href="{{ route('login') }}" class="btn btn-dark rounded-pill w-100">
-                                    Connectez-vous pour participer au débat - cliquez ici
-                                </a>
+                            <div class="comment-input-container d-flex align-items-start gap-3 mt-4">
+                                <div class="initials-circle">
+                                    !
+                                </div>
+
+                                <div class="flex-grow-1 position-relative">
+                                    <textarea id="guest-comment" aria-disabled="true" name="content" class="form-control rounded p-1 comment-input-box" rows="1"
+                                        placeholder="Ajouter un commentaire..." required></textarea>
+
+
+                                </div>
+
+                                <button type="submit" disabled id="send_comment" class="btn btn-da send-btn px-2">
+                                    <i class="bi bi-send-fill fs-5 text-dark"></i>
+                                </button>
                             </div>
+
                         @endauth
 
                     </form>
-                    <div class="row mb-2">
-                        <div class="col-md-12">
-                            <div class="comment-section card"
-                                style="overflow: auto; padding: 10px; scrollbar-width: none; {{ count($forComments) > 0 ? 'height: 600px;' : 'height: 100px;' }}">
-                                @if (count($forComments) > 0)
-                                    @foreach ($forComments as $comment)
-                                        <div class="comment-box d-flex mb-4">
-                                            <div class="initials-circle me-1">
-                                                {{ strtoupper(substr($comment->user->name, 0, 1)) }}
-                                            </div>
-                                            <div class="comment-content w-100">
-                                                <div class="d-flex align-items-center mb-1">
-                                                    <span class="username fw-bold me-2">{{ $comment->user->name }}</span>
-                                                    <span class="subscriber-count text-muted small">•</span>
-                                                    <span
-                                                        class="text-muted small ms-2">{{ $comment->date_commentaire }}</span>
+
+
+                    <div id="login-alert"
+                        class="bg-white p-4 card rounded notification-tolog shadow position-absolute d-none"
+                        style="z-index: 1000;">
+                        <a href="{{ route('login') }}" class="btn btn-dark rounded-pill w-100">
+                            Connectez-vous pour participer au débat - cliquez ici
+                        </a>
+                    </div>
+
+
+
+                    @auth
+
+                        <div class="row mb-2">
+                            <div class="col-md-12">
+                                <div class="comment-section card"
+                                    style="overflow: auto; padding: 10px; scrollbar-width: none; {{ count($forComments) > 0 ? 'height: 600px;' : 'height: 100px;' }}">
+                                    @if (count($forComments) > 0)
+                                        @foreach ($forComments as $comment)
+                                            <div class="comment-box d-flex mb-4">
+                                                <div class="initials-circle me-1">
+                                                    {{ strtoupper(substr($comment->user->name, 0, 1)) }}
                                                 </div>
-                                                <p class="mb-1">{{ $comment->texte }}</p>
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <button class="like-btn btn btn-sm p-0 text-muted" data-comment-id="{{ $comment->id_commentaire }}"
-                                                        @if (auth()->guest()) disabled @endif>
-                                                        <i class="fa fa-thumbs-up me-1 fs-5"></i>
-                                                        <span class="like-count">{{ $comment->likes->count() }}</span>
-                                                    </button>
-                                                    <button class="like-bt unlike-2 btn btn-sm p-0 text-muted" data-comment-id="{{ $comment->id_commentaire }}"
-                                                        @if (auth()->guest()) disabled @endif>
-                                                        <i class="fa fa-thumbs-down me-1 fs-5"></i>
-                                                        <span class="unlike-count">{{ $comment->unlikes->count() }}</span>
-                                                    </button>
-                                                    @auth
-                                                        <button class="btn btn-sm text-primary reply-btn"
-                                                            data-comment-id="{{ $comment->id_commentaire }}">
-                                                            Répondre
-                                                        </button>
-                                                        @if ($comment->replies->count() > 0)
-                                                            <button
-                                                                class="btn btn-link text-muted fw-2 p-0 reply-btn toggle-replies-btn"
-                                                                data-target="#replies-{{ $comment->id_commentaire }}">
-                                                                Voir {{ $comment->replies->count() }}
-                                                                réponse{{ $comment->replies->count() > 1 ? 's' : '' }}
-                                                            </button>
-                                                        @endif
-                                                    @endauth
-                                                </div>
-
-                                                {{-- Reply form --}}
-                                                <form class="reply-form youtube-reply-form mt-2 w-100"
-                                                    data-comment-id="{{ $comment->id_commentaire }}"
-                                                    style="display: none;">
-                                                    @csrf
-                                                    <div class="d-flex align-items-start gap-3">
-                                                        @auth
-                                                            <div class="initials-circle">
-                                                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                                                            </div>
-                                                        @else
-                                                            <div class="initials-circle text-muted">
-                                                                <i class="bi bi-person"></i>
-                                                            </div>
-                                                        @endauth
-
-                                                        <div class="flex-grow-1 position-relative">
-                                                            <input type="text" class="form-control reply-input-box"
-                                                                name="reply_text" placeholder="Ajouter une réponse..."
-                                                                required>
-                                                        </div>
-
-                                                        <button type="submit" class="btn btn-light send-btn px-2">
-                                                            <i class="bi bi-send-fill fs-5 text-primary"></i>
-                                                        </button>
+                                                <div class="comment-content w-100">
+                                                    <div class="d-flex align-items-center mb-1">
+                                                        <span class="username fw-bold me-2">{{ $comment->user->name }}</span>
+                                                        <span class="subscriber-count text-muted small">•</span>
+                                                        <span
+                                                            class="text-muted small ms-2">{{ $comment->date_commentaire }}</span>
                                                     </div>
-                                                </form>
+                                                    <p class="mb-1">{{ $comment->texte }}</p>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <button class="like-btn btn btn-sm p-0 text-muted"
+                                                            data-comment-id="{{ $comment->id_commentaire }}"
+                                                            @if (auth()->guest()) disabled @endif>
+                                                            <i class="fa fa-thumbs-up me-1 fs-5"></i>
+                                                            <span class="like-count">{{ $comment->likes->count() }}</span>
+                                                        </button>
+                                                        <button class="like-bt unlike-2 btn btn-sm p-0 text-muted"
+                                                            data-comment-id="{{ $comment->id_commentaire }}"
+                                                            @if (auth()->guest()) disabled @endif>
+                                                            <i class="fa fa-thumbs-down me-1 fs-5"></i>
+                                                            <span class="unlike-count">{{ $comment->unlikes->count() }}</span>
+                                                        </button>
+                                                        @auth
+                                                            <button class="btn btn-sm text-primary reply-btn"
+                                                                data-comment-id="{{ $comment->id_commentaire }}">
+                                                                Répondre
+                                                            </button>
+                                                            @if ($comment->replies->count() > 0)
+                                                                <button
+                                                                    class="btn btn-link text-muted fw-2 p-0 reply-btn toggle-replies-btn"
+                                                                    data-target="#replies-{{ $comment->id_commentaire }}">
+                                                                    Voir {{ $comment->replies->count() }}
+                                                                    réponse{{ $comment->replies->count() > 1 ? 's' : '' }}
+                                                                </button>
+                                                            @endif
+                                                        @endauth
+                                                    </div>
+
+                                                    {{-- Reply form --}}
+                                                    <form class="reply-form youtube-reply-form mt-2 w-100"
+                                                        data-comment-id="{{ $comment->id_commentaire }}"
+                                                        style="display: none;">
+                                                        @csrf
+                                                        <div class="d-flex align-items-start gap-3">
+                                                            @auth
+                                                                <div class="initials-circle">
+                                                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                                                </div>
+                                                            @else
+                                                                <div class="initials-circle text-muted">
+                                                                    <i class="bi bi-person"></i>
+                                                                </div>
+                                                            @endauth
+
+                                                            <div class="flex-grow-1 position-relative">
+                                                                <input type="text" class="form-control reply-input-box"
+                                                                    name="reply_text" placeholder="Ajouter une réponse..."
+                                                                    required>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-light send-btn px-2">
+                                                                <i class="bi bi-send-fill fs-5 text-primary"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
 
 
-                                                {{-- Replies --}}
-                                                <div id="replies-{{ $comment->id_commentaire }}"
-                                                    class="collapse replies-section w-100">
-                                                    @php renderReplies1($comment->replies); @endphp
+                                                    {{-- Replies --}}
+                                                    <div id="replies-{{ $comment->id_commentaire }}"
+                                                        class="collapse replies-section w-100">
+                                                        @php renderReplies1($comment->replies); @endphp
+                                                    </div>
                                                 </div>
                                             </div>
+                                        @endforeach
+                                    @else
+                                        <div class="text-center h-100 w-100 d-flex"
+                                            style="flex-direction: column; justify-content: center;">
+                                            <p>Aucun commentaire</p>
                                         </div>
-                                    @endforeach
-                                @else
-                                    <div class="text-center h-100 w-100 d-flex"
-                                        style="flex-direction: column; justify-content: center;">
-                                        <p>Aucun commentaire</p>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endauth
 
                 </section>
 
@@ -1073,7 +1109,7 @@
                         <div class="card" id="chat-section-holder">
                             <div class="card-header d-flex justify-content-between align-items-center p-3">
                                 <h5 class="mb-0">Discussions sur le sujet</h5>
-                                <button type="button" class="btn btn-primary btn-sm" id="toggleFullscreenBtn"
+                                <button type="button" class="btn btn-secondary btn-sm" id="toggleFullscreenBtn"
                                     title="Maximmiser -plein écran">
                                     <i id="toggleIcon" class="fas fa-expand"></i>
                                 </button>
@@ -1165,20 +1201,20 @@
                                                 <!-- Camera Button -->
 
                                                 <!-- <button type="button" id="camera-button" class="btn btn-light btn-icon me-1" style="width: 40px; height: 40px;">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="fas fa-camera text-muted"></i>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fas fa-camera text-muted"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
                                                 <!-- Photo Upload Input -->
                                                 <!-- <input type="file" id="photo-upload" name="photo" style="display: none;"> -->
 
-                                                <textarea name="texte" style="overflow: hidden; resize: none; height: 50px; width:100%; border-radius: 8px;"
+                                                <textarea name="texte" class="form-control comment-input-box bg-white p-2" style="overflow: hidden; height: 50px; width:100%; border-radius: 8px;"
                                                     placeholder="Votre message..." required></textarea>
 
 
                                                 <!-- <a class="ms-1 text-muted" href="javascript:void(0);" id="attachment-button"><i class="fas fa-paperclip"></i></a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
 
                                                 <!-- <a class="ms-3 text-muted" href="javascript:void(0);" id="emoji-button"><i class="fas fa-smile"></i></a> -->
-                                                <button class="ms-3 btn btn-primary border-none" type="submit"
+                                                <button class="ms-2 btn btn-secondary rounded-pill border-none" type="submit"
                                                     href="#!"><i class="fas fa-paper-plane"></i></button>
                                             </div>
                                         </div>
@@ -1251,6 +1287,32 @@
         </div>
     </div>
 
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const guestTextarea = document.getElementById("guest-comment");
+            const loginAlert = document.getElementById("login-alert");
+
+            if (guestTextarea) {
+                guestTextarea.addEventListener("click", function(e) {
+                    const rect = guestTextarea.getBoundingClientRect();
+
+                    loginAlert.style.top = `${rect.bottom + window.scrollY + 5}px`;
+                    loginAlert.style.left = `${rect.left + window.scrollX}px`;
+                    loginAlert.style.width = `${rect.width}px`;
+                    loginAlert.classList.remove("d-none");
+                });
+
+                // Optional: Hide alert if user clicks elsewhere
+                document.addEventListener("click", function(e) {
+                    if (!guestTextarea.contains(e.target) && !loginAlert.contains(e.target)) {
+                        loginAlert.classList.add("d-none");
+                    }
+                });
+            }
+        });
+    </script>
 
 
     {{-- AI control system --}}
@@ -1861,7 +1923,8 @@
                 .then(response => response.json())
                 .then(data => {
                     showToast(data.message, 'success'); // Notify user
-                    // location.reload(); // Reload comments
+                    location.reload();
+                    // Reload comments
                 })
                 .catch(error => console.error('Error:', error));
         });

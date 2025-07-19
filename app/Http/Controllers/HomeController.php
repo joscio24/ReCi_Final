@@ -413,7 +413,6 @@ class HomeController extends Controller
         //     ],
         //     'max_tokens' => 5,
         // ]);
-
         // if ($response->failed()) {
         //     return true; // En cas d’erreur, on laisse passer le commentaire
         // }else {
