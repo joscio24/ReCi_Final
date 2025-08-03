@@ -8,15 +8,28 @@
 
 <!-- content -->
 @section('content')
+
     @include('layouts.header3', [
         'header_title' => 'Débat',
         'header_subtitle' => $debat->titre,
         'post_image' => $debat->image,
-    ])
+    ]);
 
 
     <!--  -->
     <style>
+        .questions-bubbles span {
+            background-color: #eff0f0;
+            color: rgb(32, 31, 31);
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .questions-bubbles span:hover {
+            background-color: #dededf;
+        }
+
         .message_form {
             /* flex-grow: 1; */
             width: 100%;
@@ -177,10 +190,10 @@
         }
 
         /* .like-btn i {
-                                        color: rgb(0, 81, 255);
-                                        font-size: 16px;
-                                        transition: 0.3s ease;
-                                    } */
+                                                color: rgb(0, 81, 255);
+                                                font-size: 16px;
+                                                transition: 0.3s ease;
+                                            } */
 
         .like-btn:hover i {
             transform: scale(1.2);
@@ -407,8 +420,8 @@
         }
 
         /* .like-btn i {
-                                        color: #287bf0 !important;
-                                    } */
+                                                color: #287bf0 !important;
+                                            } */
 
         .like-btn:hover,
         .reply-btn:hover,
@@ -442,7 +455,7 @@
             font-weight: 500px !important;
             /* color: #1877f2 !important; */
             /* font-size: 13px !important;
-                                                                                                margin-top: 6px !important; */
+                                                                                                        margin-top: 6px !important; */
             text-decoration: none;
         }
 
@@ -739,17 +752,27 @@
             <div class="col-lg-8">
                 <article class="p-1">
                     <!-- <div class="card p-2">
-                                                                                                                                                                                                                                                                                                                                                                                            <h1 class="mb-3">{{ $debat->title }}</h1>
+                                                                                                                                                                                                                                                                                                                                                                                                    <h1 class="mb-3">{{ $debat->title }}</h1>
 
-                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                     <!-- <div class="post-img" style="background-image: url('/images{{ $debat->image }}'); "> -->
-                    <div class="post-img" style="background-image: url('{{ Storage::url($debat->image) }}'); ">
+                    <div class="post-img" style="background-image: url('{{ $debat->image }}'); ">
 
                     </div>
                     <div class="post-description card p-4">
-                        <p class=" mt-4">{{ $debat->description }}</p>
+                        <p class="mt-4">{{ $debat->description }}</p>
 
+                        @if ($debat->questions && $debat->questions->count() > 0)
+                            <div class="questions-bubbles mt-3 d-flex flex-wrap gap-2">
+                                @foreach ($debat->questions as $question)
+                                    <span class="badge badge-primary rounded-pill px-3 py-2" style="font-size: 0.9rem;">
+                                        {{ $question->question }}
+                                    </span>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
+
 
                     <div class="card p-2">
                         <div class="row align-items-center">
@@ -974,8 +997,8 @@
                                 </div>
 
                                 <div class="flex-grow-1 position-relative">
-                                    <textarea id="guest-comment" aria-disabled="true" name="content" class="form-control rounded p-1 comment-input-box" rows="1"
-                                        placeholder="Ajouter un commentaire..." required></textarea>
+                                    <textarea id="guest-comment" aria-disabled="true" name="content" class="form-control rounded p-1 comment-input-box"
+                                        rows="1" placeholder="Ajouter un commentaire..." required></textarea>
 
 
                                 </div>
@@ -1201,17 +1224,17 @@
                                                 <!-- Camera Button -->
 
                                                 <!-- <button type="button" id="camera-button" class="btn btn-light btn-icon me-1" style="width: 40px; height: 40px;">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fas fa-camera text-muted"></i>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fas fa-camera text-muted"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
                                                 <!-- Photo Upload Input -->
                                                 <!-- <input type="file" id="photo-upload" name="photo" style="display: none;"> -->
 
-                                                <textarea name="texte" class="form-control comment-input-box bg-white p-2" style="overflow: hidden; height: 50px; width:100%; border-radius: 8px;"
-                                                    placeholder="Votre message..." required></textarea>
+                                                <textarea name="texte" class="form-control comment-input-box bg-white p-2"
+                                                    style="overflow: hidden; height: 50px; width:100%; border-radius: 8px;" placeholder="Votre message..." required></textarea>
 
 
                                                 <!-- <a class="ms-1 text-muted" href="javascript:void(0);" id="attachment-button"><i class="fas fa-paperclip"></i></a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
 
                                                 <!-- <a class="ms-3 text-muted" href="javascript:void(0);" id="emoji-button"><i class="fas fa-smile"></i></a> -->
                                                 <button class="ms-2 btn btn-secondary rounded-pill border-none" type="submit"

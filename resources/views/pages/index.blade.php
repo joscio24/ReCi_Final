@@ -23,10 +23,9 @@
                             <div class="card h-100 text-center shadow-lg">
                                 <div class="card-body">
                                     <div class="display-3 mb-3">🗣️</div>
-                                    <h5 class="card-title fw-bold">Exprime-toi librement</h5>
+                                    <h5 class="card-title fw-bold">Ta voix compte</h5>
                                     <p class="card-text text-muted">
-                                        Une plateforme ouverte favorise l’expression d’idées et de préoccupations, stimulant
-                                        un véritable dialogue citoyen constructif.
+                                        Partage tes idées et préoccupations. Ouvre le débat..
                                     </p>
                                 </div>
                             </div>
@@ -37,10 +36,9 @@
                             <div class="card h-100 text-center shadow-lg">
                                 <div class="card-body">
                                     <div class="display-3 mb-3">🧠</div>
-                                    <h5 class="card-title fw-bold">Les idées font bouger le pays</h5>
+                                    <h5 class="card-title fw-bold">Les idées changent tout</h5>
                                     <p class="card-text text-muted">
-                                        Le débat public met en lumière les solutions citoyennes et permet à chaque voix de
-                                        contribuer à l’amélioration de la vie collective.
+                                        Propose, échange, améliore la vie citoyenne.
                                     </p>
                                 </div>
                             </div>
@@ -51,10 +49,9 @@
                             <div class="card h-100 text-center shadow-lg">
                                 <div class="card-body">
                                     <div class="display-3 mb-3">🤝</div>
-                                    <h5 class="card-title fw-bold">Agir ensemble, c’est plus fort</h5>
+                                    <h5 class="card-title fw-bold">Ensemble, on agit</h5>
                                     <p class="card-text text-muted">
-                                        En rassemblant les citoyens autour d’enjeux communs, la discussion renforce le
-                                        sentiment d’appartenance et l’action collective.
+                                        Unissons nos voix pour des actions concrètes.
                                     </p>
                                 </div>
                             </div>

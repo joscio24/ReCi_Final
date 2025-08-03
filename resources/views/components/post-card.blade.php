@@ -128,7 +128,7 @@
     <a href="debat/{{ $id }}" class="" style="text-decoration: none;">
         <div class="card border-0">
             <div class="post-cards shadow d-flex">
-                <div class="imageSection bg-default" style="background-image: url('{{ asset('storage/' . $image) }}');">
+                <div class="imageSection bg-default" style="background-image: url('{{ asset( $image) }}');">
                     <span class="badge position-relative bottom-10 start-50 translate-middle-x
                         {{ $status == 'Validé' ? 'bg-success' : ($status == 'En attente' ? 'bg-warning' : 'bg-danger') }}">
                         {{ $status == 'Validé' ? 'Ouvert' : $status }}

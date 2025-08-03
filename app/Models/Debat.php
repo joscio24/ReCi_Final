@@ -27,6 +27,7 @@ class Debat extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+
     // Relationships
     public function votes()
     {
@@ -42,5 +43,10 @@ class Debat extends Model
     {
         return $this->hasMany(Chat::class, 'id_debat');
     }
-}
 
+    // ✅ New Relationship for Questions
+    public function questions()
+    {
+        return $this->hasMany(Question::class, 'debat_id', 'id_debat');
+    }
+}

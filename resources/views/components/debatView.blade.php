@@ -1,6 +1,6 @@
 <li class="mb-2 ">
     <a href="/debat/{{$id}}" class="rec-posts">
-        <div class="rec-posts-image" style="background-image: url('{{ Storage::url($image) }}');"></div>
+        <div class="rec-posts-image" style="background-image: url('{{ $image }}');"></div>
         <div class="rec-posts-details">
             <h5 class="fz-2" style="font-size: 0.9rem">{{ Str::limit($title, 50, '...') }}</h5>
             <p>{{ Str::limit($description, 50, '...') }}</p>
