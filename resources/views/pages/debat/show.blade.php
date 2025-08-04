@@ -18,11 +18,23 @@
 
     <!--  -->
     <style>
+        .question-badge {
+            font-size: 0.9rem;
+            max-width: 350px;
+            /* adjust as needed */
+            white-space: normal;
+            /* allow wrapping */
+            word-break: break-word;
+            line-height: 1.4;
+            display: inline-block;
+        }
+
         .questions-bubbles span {
             background-color: #eff0f0;
             color: rgb(32, 31, 31);
             cursor: pointer;
             user-select: none;
+            text-align: start;
             transition: background-color 0.3s ease;
         }
 
@@ -190,10 +202,10 @@
         }
 
         /* .like-btn i {
-                                                color: rgb(0, 81, 255);
-                                                font-size: 16px;
-                                                transition: 0.3s ease;
-                                            } */
+                                                            color: rgb(0, 81, 255);
+                                                            font-size: 16px;
+                                                            transition: 0.3s ease;
+                                                        } */
 
         .like-btn:hover i {
             transform: scale(1.2);
@@ -420,8 +432,8 @@
         }
 
         /* .like-btn i {
-                                                color: #287bf0 !important;
-                                            } */
+                                                            color: #287bf0 !important;
+                                                        } */
 
         .like-btn:hover,
         .reply-btn:hover,
@@ -455,7 +467,7 @@
             font-weight: 500px !important;
             /* color: #1877f2 !important; */
             /* font-size: 13px !important;
-                                                                                                        margin-top: 6px !important; */
+                                                                                                                    margin-top: 6px !important; */
             text-decoration: none;
         }
 
@@ -752,9 +764,9 @@
             <div class="col-lg-8">
                 <article class="p-1">
                     <!-- <div class="card p-2">
-                                                                                                                                                                                                                                                                                                                                                                                                    <h1 class="mb-3">{{ $debat->title }}</h1>
+                                                                                                                                                                                                                                                                                                                                                                                                                <h1 class="mb-3">{{ $debat->title }}</h1>
 
-                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                     <!-- <div class="post-img" style="background-image: url('/images{{ $debat->image }}'); "> -->
                     <div class="post-img" style="background-image: url('{{ $debat->image }}'); ">
 
@@ -765,13 +777,15 @@
                         @if ($debat->questions && $debat->questions->count() > 0)
                             <div class="questions-bubbles mt-3 d-flex flex-wrap gap-2">
                                 @foreach ($debat->questions as $question)
-                                    <span class="badge badge-primary rounded-pill px-3 py-2" style="font-size: 0.9rem;">
+                                    <span class="badge badge-primary rounded px-3 py-2 question-badge">
                                         {{ $question->question }}
                                     </span>
                                 @endforeach
                             </div>
                         @endif
                     </div>
+
+
 
 
                     <div class="card p-2">
@@ -1224,8 +1238,8 @@
                                                 <!-- Camera Button -->
 
                                                 <!-- <button type="button" id="camera-button" class="btn btn-light btn-icon me-1" style="width: 40px; height: 40px;">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fas fa-camera text-muted"></i>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="fas fa-camera text-muted"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button> -->
                                                 <!-- Photo Upload Input -->
                                                 <!-- <input type="file" id="photo-upload" name="photo" style="display: none;"> -->
 
@@ -1234,7 +1248,7 @@
 
 
                                                 <!-- <a class="ms-1 text-muted" href="javascript:void(0);" id="attachment-button"><i class="fas fa-paperclip"></i></a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
 
                                                 <!-- <a class="ms-3 text-muted" href="javascript:void(0);" id="emoji-button"><i class="fas fa-smile"></i></a> -->
                                                 <button class="ms-2 btn btn-secondary rounded-pill border-none" type="submit"
