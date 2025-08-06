@@ -84,7 +84,7 @@
 
 <body>
     <div class="container">
-        <img id="logo-img" src="https://mon.reci.bj/images/logo_reci_noir.png" alt="Logo" class="mb-3" style="width: 120px;" />
+        <img id="logo-img" src="https://monreci.bj/images/logo_reci_noir.png" alt="Logo" class="mb-3" style="width: 120px;" />
 
         <h1>🔐 Vérification OTP</h1>
         <p class="message">Utilisez le code OTP ci-dessous pour finaliser votre connexion. Ce code expirera dans <b>10

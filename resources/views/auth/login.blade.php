@@ -19,7 +19,7 @@
             <!-- Right Section with Form -->
             <div class="col-md-5  p-5">
                 <div class="text-cente">
-                    <a href="https://mon.reci.bj"><img id="logo-img" src="/images/logo_reci_noir.png" alt="Logo" class="mb-3" style="width: 120px;" /></a>
+                    <a href="https://monreci.bj"><img id="logo-img" src="/images/logo_reci_noir.png" alt="Logo" class="mb-3" style="width: 120px;" /></a>
 
                     <h5 class="mb-3" style="font-weight: 600;">Ravi de te revoir</h5>
                 </div>

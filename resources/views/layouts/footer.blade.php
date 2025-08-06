@@ -77,7 +77,7 @@
         <div class="footer-legal d-flex justify-content-between mt-4"
             style="justify-content: space-between; gap: 40px; ">
             <p style="font-size: medium; font-weight: 900;">
-                <span class="license">Réflexions Citoyennes © 2024</span>
+                <span class="license">Réflexions Citoyennes &copy; {{ date('Y') }}</span>
 
 
             </p>
