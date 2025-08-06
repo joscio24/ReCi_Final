@@ -5,13 +5,10 @@ namespace App\Events;
 use App\Models\Chat;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Queue\SerializesModels;
 
-class MessageSent implements ShouldBroadcastNow
+class MessageSent implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
@@ -24,24 +21,26 @@ class MessageSent implements ShouldBroadcastNow
 
     public function broadcastOn()
     {
-        \Log::info("Broadcasting on channel: chat.{$this->message->id_debat}");
-
+        // Public channel (no auth)
         return new Channel('chat.' . $this->message->id_debat);
-
     }
-
 
     public function broadcastWith()
     {
-
-
         return [
-            'id' => $this->message->id,
-            'user' => $this->message->user->name,
-            'message' => $this->message->message,
-            'time' => $this->message->created_at->format('H:i:s'),
-            'user_id' => $this->message->user->id, // Add user_id
-            'created_at' => $this->message->created_at, // Add created_at
+            'id_message' => $this->message->id_message,
+            'texte' => $this->message->texte,
+            'date_message' => $this->message->date_message,
+            'user' => [
+                'id' => $this->message->user->id,
+                'name' => $this->message->user->name,
+                // add profile_image if you want
+            ],
         ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'message.sent';
     }
 }

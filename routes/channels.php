@@ -23,17 +23,11 @@ use App\Models\Debat;
 
 
 Broadcast::channel('chat.{debatid}', function ($user, $debatid) {
-    // Example: Check if the user has access to this post card chat
-    // You could create a method like `canAccessChat` on your User model to check if the user
-    // is associated with this post or has the required permission.
-
-    if ($user->canAccessChat($debatid)) {
-        return ['id' => $user->id]; // You can return additional data, if needed
-    }
-
-    // Deny access if the user can't access the chat
-    return false;
+    // You can implement your own access logic here.
+    // For now, allow any authenticated user.
+    return ['id' => $user->id, 'name' => $user->name];
 });
+
 
 Broadcast::channel('chatType', function ($user, $postCardId) {
 

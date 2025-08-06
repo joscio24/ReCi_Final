@@ -66,6 +66,12 @@
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
                     </div>
+                     <!-- Google Sign-In Button -->
+                     <div class="col-12">
+                        <a type="button" href="{{ route('google.login') }}" class="btn btn-outline-dark w-100">
+                            <i class="bi bi-google"></i> Se connecter avec Google
+                        </a>
+                    </div>
                 </form>
                 <div class="text-center mt-3">
                     <p>Vous avez déjà un compte ? <a href="{{ route('login') }}" class="text-primary">Se connecter</a></p>

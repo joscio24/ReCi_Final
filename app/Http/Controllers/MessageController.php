@@ -34,16 +34,14 @@ class MessageController extends Controller
     }
 
 
+
     public function store(Request $request, $postCardId)
     {
-
-
-
         $validated = $request->validate([
             'texte' => 'required|string|max:255',
         ]);
 
-
+        // Create message
         $message = Chat::create([
             'id_debat' => $postCardId,
             'id_user' => auth()->id(),
@@ -51,9 +49,10 @@ class MessageController extends Controller
             'date_message' => now(),
         ]);
 
+        // Load user relation so event can broadcast user info
+        $message->load('user');
 
-        // broadcast(new Typing(auth()->id(), $postCardId))->toOthers();
-
+        // Broadcast event to public channel
         broadcast(new MessageSent($message))->toOthers();
 
         return response()->json(['success' => true, 'message' => $message]);

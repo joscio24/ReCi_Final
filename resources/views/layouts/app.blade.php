@@ -179,6 +179,8 @@ header('Content-Type: text/html; charset=UTF-8');
     <!-- BEGIN: Theme JS-->
     <script src="/app-assets/js/core/app-menu.js"></script>
     <script src="/app-assets/js/core/app.js"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
+
     @vite(['resources/js/app.js'])
 
 

@@ -10,18 +10,23 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 // use Illuminate\Support\Facades\Request;
 use App\Events\MessageSent;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\PostCardController;
 use App\Events\Typing;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\DebatController;
+use App\Http\Controllers\Auth\GoogleController;
 
-Broadcast::routes(['middleware' => ['auth:sanctum']]); // Use 'auth' if not using Sanctum
+use App\Http\Controllers\Auth\AuthController;
+
+Broadcast::routes(['middleware' => ['web', 'auth']]);
+ // Use 'auth' if not using Sanctum
 
 // Add this to your routes/web.php
 Auth::routes();
@@ -45,11 +50,11 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/otp-verification', function(){
-    return view('auth.otp-verification');
-})->name('otp.verify.form');
+// Route::get('/otp-verification', function(){
+//     return view('auth.otp-verification');
+// })->name('otp.verify.form');
 
-Route::post('/otp-verify', [App\Http\Controllers\OTPVerificationController::class, 'verifyOTP'])->name('otp.verify');
+// Route::post('/otp-verify', [App\Http\Controllers\OTPVerificationController::class, 'verifyOTP'])->name('otp.verify');
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
@@ -60,7 +65,33 @@ Route::get('/test-openai', function () {
     return $response->json(); // Devrait afficher la liste des modèles
 });
 
+Route::get('auth/google', function () {
+    return Socialite::driver('google')->redirect();
+})->name('google.login');
+// Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
+Route::get('/email/verify/{token}', [GoogleController::class, 'verifyEmail'])->name('email.verify');
+Route::get('/verify-email/{token}', function($token){
+    $user = User::where('verification_token', $token)->first();
 
+    if (!$user) {
+        return redirect('/login')->with('error', 'Lien de vérification invalide ou expiré.');
+    }
+
+    $user->update([
+        'email_verified_at' => now(),
+        'verification_token' => null
+    ]);
+
+    Auth::login($user);
+
+    return redirect('/')->with('success', 'Votre e-mail a été vérifié avec succès !');
+});
+
+
+Route::get('/otp/verify', [LoginController::class, 'showOtpForm'])->name('otp.verify.form');
+Route::post('/otp/verify', [LoginController::class, 'verifyOtp'])->name('otp.verify');
+Route::post('/otp-resend', [LoginController::class, 'resendOtp'])->name('otp.resend');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/post-cards/{postCard}/messages', [MessageController::class, 'store'])->name('messages.store');

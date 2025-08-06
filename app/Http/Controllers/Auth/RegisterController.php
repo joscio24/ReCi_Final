@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\VerifyEmailMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -16,36 +20,39 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        // Validate the incoming request
+        // Validate form data
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-
         ]);
 
-        // Create the user
+        // Generate verification token
+        $token = Str::random(60);
+
+        // Create user
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->input('role', 'user'), // Default to 'user' if no role is provided
+            'role' => $request->input('role', 'user'),
+            'verification_token' => $token,
         ]);
 
-        // Check the role of the authenticated user (if required)
-        // if (auth()->check() && auth()->user()->role === 'admin') {
-        //     // Add logic specific to admins if necessary
-        // }
+        // ✅ Check if email already exists in utilisateurs table before inserting
+        $exists = DB::table('utilisateurs')->where('email', $user->email)->exists();
 
-        // Add the user to the 'utilisateur' table
-        \DB::table('utilisateurs')->insert([
-            // 'id_utilisateur' => $user->id,
-            'nom' => $user->name,
-            'email' => $user->email,
-            'role' => $request->input('role', 'user'), // Default to 'user' if no role is provided
-        ]);
+        if (!$exists) {
+            DB::table('utilisateurs')->insert([
+                'nom' => $user->name,
+                'email' => $user->email,
+                'role' => $request->input('role', 'user'),
+            ]);
+        }
 
-        // Redirect to login with a success message
-        return redirect('/login')->with('success', 'Registration successful. Please log in.');
+        // Send verification email
+        Mail::to($user->email)->send(new VerifyEmailMail($token));
+
+        return redirect('/login')->with('success', 'Inscription réussie. Vérifiez votre e-mail pour activer votre compte.');
     }
 }

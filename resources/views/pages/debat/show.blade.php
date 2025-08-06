@@ -202,10 +202,10 @@
         }
 
         /* .like-btn i {
-                                                            color: rgb(0, 81, 255);
-                                                            font-size: 16px;
-                                                            transition: 0.3s ease;
-                                                        } */
+                                                                                    color: rgb(0, 81, 255);
+                                                                                    font-size: 16px;
+                                                                                    transition: 0.3s ease;
+                                                                                } */
 
         .like-btn:hover i {
             transform: scale(1.2);
@@ -432,8 +432,8 @@
         }
 
         /* .like-btn i {
-                                                            color: #287bf0 !important;
-                                                        } */
+                                                                                    color: #287bf0 !important;
+                                                                                } */
 
         .like-btn:hover,
         .reply-btn:hover,
@@ -467,7 +467,7 @@
             font-weight: 500px !important;
             /* color: #1877f2 !important; */
             /* font-size: 13px !important;
-                                                                                                                    margin-top: 6px !important; */
+                                                                                                                                            margin-top: 6px !important; */
             text-decoration: none;
         }
 
@@ -764,9 +764,9 @@
             <div class="col-lg-8">
                 <article class="p-1">
                     <!-- <div class="card p-2">
-                                                                                                                                                                                                                                                                                                                                                                                                                <h1 class="mb-3">{{ $debat->title }}</h1>
+                                                                                                                                                                                                                                                                                                                                                                                                                                        <h1 class="mb-3">{{ $debat->title }}</h1>
 
-                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                     <!-- <div class="post-img" style="background-image: url('/images{{ $debat->image }}'); "> -->
                     <div class="post-img" style="background-image: url('{{ $debat->image }}'); ">
 
@@ -822,7 +822,7 @@
 
                             <!-- Like / Dislike Buttons -->
                             <div class="col-auto {{ $userHasVoted }} mb-2">
-                                <div class="d-flex align-items-center mt-2" style="gap: 20px;">
+                                <div class="d-flex flex-wrap align-items-center mt-2" style="gap: 20px;">
                                     <!-- "Pour" (Like) Button -->
                                     <div class="d-flex align-items-center">
                                         <button class="btn btn-default d-flex align-items-center"
@@ -1238,8 +1238,8 @@
                                                 <!-- Camera Button -->
 
                                                 <!-- <button type="button" id="camera-button" class="btn btn-light btn-icon me-1" style="width: 40px; height: 40px;">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="fas fa-camera text-muted"></i>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="fas fa-camera text-muted"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button> -->
                                                 <!-- Photo Upload Input -->
                                                 <!-- <input type="file" id="photo-upload" name="photo" style="display: none;"> -->
 
@@ -1248,7 +1248,7 @@
 
 
                                                 <!-- <a class="ms-1 text-muted" href="javascript:void(0);" id="attachment-button"><i class="fas fa-paperclip"></i></a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
 
                                                 <!-- <a class="ms-3 text-muted" href="javascript:void(0);" id="emoji-button"><i class="fas fa-smile"></i></a> -->
                                                 <button class="ms-2 btn btn-secondary rounded-pill border-none" type="submit"
@@ -1779,6 +1779,21 @@
     <script src="{{ asset('/build/assets/app-BxeXCBDj.js') }}"></script>
     <!-- typing script -->
 
+
+    {{-- <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script> --}}
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.0/dist/echo.iife.js"></script>
+
+    <script>
+        window.Pusher = Pusher;
+
+        window.Echo = new Echo({
+            broadcaster: 'pusher',
+            key: '{{ env('PUSHER_APP_KEY') }}',
+            cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
+            forceTLS: true
+        });
+    </script>
     <script>
         Pusher.logToConsole = true;
 
@@ -1801,7 +1816,7 @@
 
         let typingTimer; // Timer variable
         const typingTimeout = 2000; // Timeout duration in milliseconds
-        const postCardIds = '{{ $debat->id_debat }}';
+        const postCardIdss = '{{ $debat->id_debat }}';
         const messageInput = document.querySelector('textarea[name="texte"]');
         const messagesContainers = document.getElementById('chat-section');
 
@@ -1830,13 +1845,17 @@
             removeTypingBubble();
         });
 
+        const postCardIds = @json($debat->id_debat);
+        const currentUserId = {{ auth()->check() ? auth()->id() : 'null' }};
+
         // Listen for the typing event using Laravel Echo
         window.Echo.channel(`chatType.${postCardIds}`)
             .listen('Typing', (e) => {
-                console.log('Typing event received:', e);
+                // console.log('Typing event received:', e);
 
                 // Only show the typing bubble if the user is not typing themselves
-                const isTyping = e.id_user !== parseInt("{{ auth()->id() }}");
+                const isTyping = e.user_id !== currentUserId;
+
 
                 const typingBubble = document.getElementById(typingBubbleId);
 
@@ -1869,6 +1888,49 @@
                 console.error('Error subscribing to channel:', error);
             });
 
+
+
+
+        function appendMessageToChat(message) {
+            const isSent = message.user.id === parseInt("{{ auth()->id() }}");
+            const createdAt = new Date(message.date_message || message.created_at);
+            const hours = createdAt.getHours() % 12 || 12;
+            const minutes = String(createdAt.getMinutes()).padStart(2, '0');
+            const amPm = createdAt.getHours() >= 12 ? 'PM' : 'AM';
+            const formattedTime = `${hours}:${minutes} ${amPm}`;
+
+            const avatar = message.user.profile_image ?? 'https://default.avatar.jpg';
+
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('d-flex', isSent ? 'flex-row-reverse' : 'flex-row', 'mb-4');
+            messageElement.innerHTML = `
+                    <img class="d-none" src="${avatar}" alt="avatar" width="30px" height="30px" />
+                    <div>
+                        <p style="border-radius: 20px; border-bottom-left-radius: 0;"
+                            class="small p-2 ${isSent ? 'me-3 text-white bg-primary' : 'ms-3 bg-white'} mb-1 rounded-3">
+                            ${message.texte}
+                        </p>
+                        <p class="small ${isSent ? 'me-3 text-muted' : 'ms-3 text-muted'}">${formattedTime}</p>
+                    </div>
+                `;
+
+            const chatContainer = document.getElementById('chat-section');
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+
+
+        const postCardId = '{{ $debat->id_debat }}';
+        const messagesContainer = document.getElementById('chat-section');
+
+        window.Echo.channel(`chat.${postCardId}`)
+            .listen('.message.sent', (e) => {
+                console.log('MessageSent event received:', e);
+
+                appendMessageToChat(e);
+            });
+
         // Function to remove the typing bubble
         function removeTypingBubble() {
             const typingBubble = document.getElementById(typingBubbleId);
@@ -1878,77 +1940,29 @@
         }
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/7.0.3/pusher.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.13.0/dist/echo.iife.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.2/dist/index.min.js"></script>
-
-
 
     <script>
-        // Include Emoji Button library
-        // Initialize Emoji Picker
-        // const picker = new EmojiButton();
-
-        // picker.on('emoji', emoji => {
-        //     const textarea = document.querySelector('textarea[name="texte"]');
-        //     textarea.value += emoji;
-        // });
-
-        // document.getElementById('emoji-button').addEventListener('click', () => {
-        //     picker.togglePicker(document.getElementById('emoji-button'));
-        // });
-
-
-        // document.getElementById('camera-button').addEventListener('click', function() {
-        //     document.getElementById('photo-upload').click();
-        // });
-
-        // document.getElementById('attachment-button').addEventListener('click', function() {
-        //     document.getElementById('attachment-upload').click();
-        // });
-
-        // document.getElementById('photo-upload').addEventListener('change', function(event) {
-        //     const file = event.target.files[0];
-        //     if (file) {
-        //         const reader = new FileReader();
-        //         reader.onload = function(e) {
-        //             // Optionally, display the image preview
-        //             const imgPreview = document.createElement('img');
-        //             imgPreview.src = e.target.result;
-        //             imgPreview.style.maxWidth = '100%';
-        //             imgPreview.style.marginLeft = '0px';
-        //             document.querySelector('.image-preview').appendChild(imgPreview);
-        //         };
-        //         reader.readAsDataURL(file);
-        //     }
-        // });
-
-
-
         function shareContent() {
             const shareData = {
                 title: 'Check out this debate!',
                 text: 'Join the discussion on this interesting topic.',
-                url: window.location.href, // Current page URL
+                url: window.location.href,
             };
 
             if (navigator.share) {
-                // Use the Web Share API if available
                 navigator.share(shareData)
                     .then(() => console.log('Content shared successfully'))
                     .catch((error) => console.error('Error sharing:', error));
             } else {
-                // Fallback for browsers that don't support navigator.share
                 showToast('Sharing is not supported on this browser. Copy the URL to share: ' + shareData.url, 'error');
             }
         }
 
         document.getElementById('comment-form').addEventListener('submit', function(e) {
             e.preventDefault();
-
             let formData = new FormData(this);
+            const id_debat = formData.id_debat;
 
-            const id_debat = formData.id_debat
             fetch("{{ route('comments.store', $debat->id_debat) }}", {
                     method: 'POST',
                     headers: {
@@ -1959,28 +1973,23 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    showToast(data.message, 'success'); // Notify user
+                    showToast(data.message, 'success');
                     location.reload();
-                    // Reload comments
                 })
                 .catch(error => console.error('Error:', error));
         });
 
         document.getElementById('message_form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent the form from reloading the page
+            e.preventDefault();
 
             const messageInput = this.querySelector('textarea[name="texte"]');
             const messageText = messageInput.value.trim();
-            // const photoInput = document.getElementById('photo-upload');
-            // const photoFile = photoInput.files[0];
             const postCardId = '{{ $debat->id_debat }}';
 
-            // Ensure a message or photo is provided
             if (!messageText && !photoFile) return;
 
             const formData = new FormData();
             formData.append('texte', messageText);
-            // formData.append('photo', photoFile);
 
             axios.post(`{{ route('messages.store', ['postCard' => $debat->id_debat]) }}`, formData, {
                     headers: {
@@ -1988,13 +1997,11 @@
                     },
                 })
                 .then(response => {
-                    // Clear the input fields
                     messageInput.value = '';
-                    // photoInput.value = '';
 
-                    // Add the new message to the chat UI
                     const message = response.data.message;
                     console.log(message);
+
                     const isSent = message.id_user === parseInt("{{ auth()->id() }}");
                     const createdAt = new Date(message.created_at);
                     const hours = createdAt.getHours() % 12 || 12;
@@ -2005,100 +2012,36 @@
                     const messageElement = document.createElement('div');
                     messageElement.classList.add('d-flex', isSent ? 'flex-row-reverse' : 'flex-row', 'mb-4');
                     messageElement.innerHTML = `
-                                <img class="d-none" src="${isSent ? '{{ asset(auth()->user()->profile_image ?? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp') }}' : '{{ asset($message->user->profile_image ?? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp') }}'}"
-                                     alt="avatar"  width="30px" height="30px">
-                                <div>
-                                    <p style="border-radius: 20px;
-                                    border-bottom-left-radius: 0;" class="small p-2 ${isSent ? 'me-3 text-white bg-primary' : 'ms-3 bg-body-tertiary'} mb-1 rounded-3">
-                                        ${message.texte}
-                                    </p>
-                                    <p class="small ${isSent ? 'me-3 text-muted' : 'ms-3 text-muted'}">${formattedTime}</p>
-                                </div>
-                            `;
+                <img class="d-none" src="${isSent
+                    ? '{{ asset(auth()->user()->profile_image ?? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp') }}'
+                    : '{{ asset($message->user->profile_image ?? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp') }}'}"
+                    alt="avatar" width="30px" height="30px" />
+                <div>
+                    <p style="border-radius: 20px; border-bottom-left-radius: 0;"
+                        class="small p-2 ${isSent ? 'me-3 text-white bg-primary' : 'ms-3 bg-body-tertiary'} mb-1 rounded-3">
+                        ${message.texte}
+                    </p>
+                    <p class="small ${isSent ? 'me-3 text-muted' : 'ms-3 text-muted'}">${formattedTime}</p>
+                </div>
+            `;
 
                     const chatContainer = document.getElementById('chat-section');
                     chatContainer.appendChild(messageElement);
-                    chatContainer.scrollTop = chatContainer.scrollHeight; // Auto-scroll to the bottom
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
                 })
                 .catch(error => {
                     console.error('Error sending message:', error);
                 });
         });
 
-        // Camera button functionality
-        // document.querySelector('.fa-camera').addEventListener('click', () => {
-        //     document.getElementById('photo-upload').click();
-        // });
-
-        // Automatically adjust textarea height
         document.querySelector('textarea[name="texte"]').addEventListener('input', function() {
-            this.style.height = 'auto'; // Reset the height
-            this.style.height = this.scrollHeight + 'px'; // Adjust to the new height
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
         });
-
-
-        // Enable pusher logging - don't include this in production
-
-
-
-        const postCardId = '{{ $debat->id_debat }}';
-        const messagesContainer = document.getElementById('chat-section');
-
-        //     g(window.Echo.channel(`chat.${postCardId}`));
-        // console.lo
-        // Listen for the MessageSent event on the private channel
-
-        // Listen for the MessageSent event on the public channel
-        window.Echo.channel(`chat.${postCardId}`)
-            .listen('MessageSent', (e) => {
-                console.log('MessageSent event received:', e);
-
-                // Check if the message is sent by the current user
-                const isSent = e.id - user === parseInt("{{ auth()->id() }}");
-                const createdAt = new Date(e.created_at);
-                const hours = createdAt.getHours() % 12 || 12;
-                const minutes = String(createdAt.getMinutes()).padStart(2, '0');
-                const amPm = createdAt.getHours() >= 12 ? 'PM' : 'AM';
-                const formattedTime = `${hours}:${minutes} ${amPm}`;
-
-                // Only add messages sent by others to the UI
-                if (!isSent) {
-                    const messageElement = document.createElement('div');
-                    messageElement.classList.add('d-flex', 'flex-row', 'mb-4');
-                    messageElement.innerHTML = `
-                                    <img  class="d-none" src="${e.id_user === parseInt("{{ auth()->id() }}") ? '{{ asset(auth()->user()->profile_image ?? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp') }}' : '{{ asset($message->user->profile_image ?? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp') }}'}"
-                                         alt="avatar" width="30px" height="30px">
-                                    <div>
-                                        <p style="border-radius: 20px;
-                            border-bottom-left-radius: 0;" class="small p-2 ${e.id_user === parseInt("{{ auth()->id() }}") ? 'me-3 text-white bg-primary' : 'ms-3 bg-white'} mb-1 rounded-3">
-                                            ${e.texte}
-                                        </p>
-                                        <p class="small ${e.id_user === parseInt("{{ auth()->id() }}") ? 'me-3 text-muted' : 'ms-3 text-muted'}">${formattedTime}</p>
-                                    </div>
-                                `;
-
-                    const chatContainer = document.getElementById('chat-section');
-                    chatContainer.appendChild(messageElement);
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                }
-            })
-            .error((error) => {
-                console.error('Error subscribing to channel:', error);
-            });
-
-        // window.Echo.private(`chat.${postCardId}`)
-        // .listen('.MessageSent', (e) => {
-        //     console.log('Message received:', e);
-        // })
-        // .listenForWhisper('typing', (e) => {
-        //     console.log('User is typing:', e);
-        // })
-        // .error((error) => {
-        //     console.error('Subscription error:', error);
-        // });
-
-
-        // Listen for new messages on the private channel
-        // console.log(window.Echo.private);
     </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/7.0.3/pusher.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.13.0/dist/echo.iife.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.2/dist/index.min.js"></script>
 @endpush

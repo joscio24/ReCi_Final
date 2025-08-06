@@ -6,11 +6,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 // Uncomment below to use Laravel Echo with Pusher (Optional)
 import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
+// import Pusher from 'pusher-js';
 
 // Enable Pusher logging for development (Optional)
 
-window.Pusher = Pusher;
+window.Pusher = require('pusher-js');
 
 // Get the token from a meta tag or directly from the server
 

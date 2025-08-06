@@ -27,7 +27,7 @@ class Typing implements ShouldBroadcastNow
     }
 
     // Specify which channel the event will broadcast on
-    public function broadcastOn()
+    public function broadcastOn() 
     {
         \Log::info("Broadcasting on channel: chatType.{$this->postCardId}");
 

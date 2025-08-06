@@ -64,9 +64,9 @@
 
                     <!-- Google Sign-In Button -->
                     <div class="col-12">
-                        <button type="button" class="btn btn-outline-dark w-100">
+                        <a type="button" href="{{ route('google.login') }}" class="btn btn-outline-dark w-100">
                             <i class="bi bi-google"></i> Se connecter avec Google
-                        </button>
+                        </a>
                     </div>
                 </form>
                 <div class="text-center mt-3">
