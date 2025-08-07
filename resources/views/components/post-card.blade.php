@@ -1,4 +1,3 @@
-
 <style>
     /* General Styles */
     .cards {
@@ -100,7 +99,8 @@
             /* padding: 20px; */
             justify-content: end;
         }
-        .badge{
+
+        .badge {
             max-width: 60%;
             opacity: 0.7;
         }
@@ -123,72 +123,91 @@
             width: auto;
         }
     }
-    </style>
+</style>
+@php
+    use Illuminate\Support\Str;
 
-    <a href="debat/{{ $id }}" class="" style="text-decoration: none;">
-        <div class="card border-0">
-            <div class="post-cards shadow d-flex">
-                <div class="imageSection bg-default" style="background-image: url('{{ asset( $image) }}');">
-                    <span class="badge position-relative bottom-10 start-50 translate-middle-x
+    $slug = Str::slug($title);
+    $shareUrl = url('debat/' . $id . '/' . $slug);
+    $shareText = "Découvrez ce débat et rejoignez la discussion : \n $shareUrl";
+@endphp
+
+<a href="{{ url('debat/' . $id . '/' . Str::slug($title)) }}" class="" style="text-decoration: none;">
+    <div class="card border-0">
+        <div class="post-cards shadow d-flex">
+            <div class="imageSection bg-default" style="background-image: url('{{ asset($image) }}');">
+                <span
+                    class="badge position-relative bottom-10 start-50 translate-middle-x
                         {{ $status == 'Validé' ? 'bg-success' : ($status == 'En attente' ? 'bg-warning' : 'bg-danger') }}">
-                        {{ $status == 'Validé' ? 'Ouvert' : $status }}
-                    </span>
-                </div>
-                <div class="content-details p-2">
-                    <div class="col-md-8 d-flex w-100 flex-column">
-
-                        <h5 class="card-title text-truncate">{{ $title }}</h5>
-                        <div>
-                            <small class="text-muted d-block mt-1">
-                                {{ \Carbon\Carbon::parse($date)->translatedFormat('d F Y') }}
-                            </small>
-                            <span class="badge bg-primary px-2 py-1 " style="font-size: 10px;">
-                                {{ strtoupper(str_replace('_', ' ', $category)) }}
-                            </span>
-                        </div>
-                        <p class="card-text text-muted">{{ Str::limit($description, 70, '...') }}</p>
-                    </div>
-                    <div class="d-flex action-section align-items-center p-3 mt-0">
-                        <div class="icon-with-badge position-relative d-flex align-items-center">
-                            <i class="fi fi-rr-messages text-dark"></i>
-                            <span class="badge position-absolute top-0 start-100 translate-middle badge-rounded-circle bg-white">
-                                {{ $comments }}
-                            </span>
-                        </div>
-                        <div class="icon-with-badge position-relative d-flex align-items-center">
-                            <i class="fi fi-rr-heart text-dark"></i>
-                            <span class="badge ms-1 position-absolute top-0 start-100 translate-middle badge-rounded-circle bg-white">
-                                {{ $likes }}
-                            </span>
-                        </div>
-                        <div class="icon-with-badge d-flex align-items-center" onclick="openShareModal(event, 'debat/{{ $id }}')">
-                            <i class="fi fi-rr-share text-dark"></i>
-                        </div>
-                    </div>
-                </div>
+                    {{ $status == 'Validé' ? 'Ouvert' : $status }}
+                </span>
             </div>
-        </div>
-    </a>
+            <div class="content-details p-2">
+                <div class="col-md-8 d-flex w-100 flex-column">
 
-    <div id="shareModal" class="modal fade" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="shareModalLabel">Partager le débat</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="card-title text-truncate">{{ $title }}</h5>
+                    <div>
+                        <small class="text-muted d-block mt-1">
+                            {{ \Carbon\Carbon::parse($date)->translatedFormat('d F Y') }}
+                        </small>
+                        <span class="badge bg-primary px-2 py-1 " style="font-size: 10px;">
+                            {{ strtoupper(str_replace('_', ' ', $category)) }}
+                        </span>
+                    </div>
+                    <p class="card-text text-muted">{{ Str::limit($description, 70, '...') }}</p>
                 </div>
-                <div class="modal-body text-center">
-                    <h6>Sélectionnez une plateforme pour le partage:</h6>
-                    <div class="d-flex justify-content-around">
-                        <button class="btn btn-primary">Facebook</button>
-                        <button class="btn btn-info">LinkedIn</button>
-                        <button class="btn btn-success">WhatsApp</button>
-                        <button class="btn btn-dark">Instagram</button>
+                <div class="d-flex action-section align-items-center p-3 mt-0">
+                    <div class="icon-with-badge position-relative d-flex align-items-center">
+                        <i class="fi fi-rr-messages text-dark"></i>
+                        <span
+                            class="badge position-absolute top-0 start-100 translate-middle badge-rounded-circle bg-white">
+                            {{ $comments }}
+                        </span>
+                    </div>
+                    <div class="icon-with-badge position-relative d-flex align-items-center">
+                        <i class="fi fi-rr-heart text-dark"></i>
+                        <span
+                            class="badge ms-1 position-absolute top-0 start-100 translate-middle badge-rounded-circle bg-white">
+                            {{ $likes }}
+                        </span>
+                    </div>
+                    <div class="icon-with-badge d-flex align-items-center"
+                        onclick="openShareModal(event, 'debat/{{ $id }}')">
+                        <i class="fi fi-rr-share text-dark"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</a>
+
+<div id="shareModal" class="modal fade" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shareModalLabel">Partager le débat</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <h6>Sélectionnez une plateforme pour le partage:</h6>
+                <div class="d-flex flex-wrap justify-content-around gap-2">
+                    <button class="btn btn-primary" onclick="shareToFacebook()" title="Partager sur Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="btn btn-info" onclick="shareToLinkedIn()" title="Partager sur LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </button>
+                    <button class="btn btn-success" onclick="shareToWhatsApp()" title="Partager sur WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    {{-- <button class="btn btn-danger" onclick="shareToInstagram()" title="Partager sur Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </button> --}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -203,36 +222,40 @@
         myModal.show();
 
         // Store the link so it can be opened after sharing
-        sessionStorage.setItem('shareLink', 'debat/{{ $id }}'); // Store the URL for later
+        // Store the URL for later
     }
 
     // Function to share to Facebook
     function shareToFacebook() {
-        const url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(window.location.href);
-        window.open(url, '_blank', 'width=600,height=400');
-        closeModalAndRedirect();
+        const url = encodeURIComponent("{{ $shareUrl }}");
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        window.open(facebookUrl, '_blank', 'width=600,height=400');
     }
+
 
     // Function to share to LinkedIn
     function shareToLinkedIn() {
-        const url = "https://www.linkedin.com/shareArticle?mini=true&url=" + encodeURIComponent(window.location.href);
-        window.open(url, '_blank', 'width=600,height=400');
-        closeModalAndRedirect();
+        const url = encodeURIComponent("{{ $shareUrl }}");
+        const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+        window.open(linkedinUrl, '_blank', 'width=600,height=400');
     }
+
 
     // Function to share to WhatsApp
     function shareToWhatsApp() {
-        const url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(window.location.href);
-        window.open(url, '_blank', 'width=600,height=400');
-        closeModalAndRedirect();
+        const text = encodeURIComponent("Découvrez ce débat et rejoignez la discussion : \n  {{ $shareUrl }}");
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${text}`;
+        window.open(whatsappUrl, '_blank');
     }
 
+
     // Function to share to Instagram (Not applicable via web)
-    function shareToInstagram() {
-        const url = "https://www.instagram.com/";
-        window.open(url, '_blank', 'width=600,height=400');
-        closeModalAndRedirect();
-    }
+    // function shareToInstagram() {
+    //     const text = encodeURIComponent("Découvrez ce débat et rejoignez la discussion : {{ $shareUrl }}");
+    //     const url = "https://www.instagram.com/";
+    //     window.open(url, '_blank', 'width=600,height=400');
+    //     closeModalAndRedirect();
+    // }
 
     // Function to close the modal and redirect the user after sharing
     function closeModalAndRedirect() {
@@ -251,19 +274,17 @@
 <script>
     function shareContent() {
         const shareData = {
-            title: 'Check out this debate!',
-            text: 'Join the discussion on this interesting topic.',
-            url: `http://localhost:8000/debat/{{ $id }}`, // Current page URL
+            title: "{{ $title }}",
+            text: "Découvrez ce débat et rejoignez la discussion :",
+            url: "{{ $shareUrl }}",
         };
 
         if (navigator.share) {
-            // Use the Web Share API if available
             navigator.share(shareData)
-                .then(() => console.log('Content shared successfully'))
-                .catch((error) => console.error('Error sharing:', error));
+                .then(() => console.log('Partagé avec succès'))
+                .catch((error) => console.error('Erreur de partage:', error));
         } else {
-            // Fallback for browsers that don't support navigator.share
-            alert('Sharing is not supported on this browser. Copy the URL to share: ' + shareData.url);
+            alert("Ce navigateur ne prend pas en charge le partage. Copiez le lien : {{ $shareUrl }}");
         }
     }
 </script>

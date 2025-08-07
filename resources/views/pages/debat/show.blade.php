@@ -3,8 +3,39 @@
 
 <!-- title -->
 @section('title')
-    ReCi/débat | {{ $debat->title }}
+    ReCi/débat | {{ $debat->titre }}
 @endSection
+
+@section('meta')
+    @php
+        use Illuminate\Support\Str;
+
+        $slug = Str::slug($debat->titre);
+        $url = url("debat/{$debat->id_debat}/{$slug}");
+        $image = $debat->image; // or use $debat->image_url if already full URL
+        $description = Str::limit(strip_tags($debat->description), 150);
+    @endphp
+
+    <title>{{ $debat->titre }}</title>
+    <meta name="description" content="{{ $description }}" />
+    <link rel="canonical" href="{{ $url }}" />
+
+    <!-- Open Graph for WhatsApp / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ $debat->titre }}" />
+    <meta property="og:description" content="{{ $description }}" />
+    <meta property="og:image" content="{{ $image }}" />
+    <meta property="og:url" content="{{ $url }}" />
+    <meta property="og:site_name" content="CCC App" />
+
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ $debat->titre }}" />
+    <meta name="twitter:description" content="{{ Str::limit(strip_tags($debat->description), 150) }}" />
+    <meta name="twitter:image" content="{{ $debat->image }}" />
+@endsection
+
 
 <!-- content -->
 @section('content')
@@ -202,10 +233,10 @@
         }
 
         /* .like-btn i {
-                                                                                    color: rgb(0, 81, 255);
-                                                                                    font-size: 16px;
-                                                                                    transition: 0.3s ease;
-                                                                                } */
+                                                                                                        color: rgb(0, 81, 255);
+                                                                                                        font-size: 16px;
+                                                                                                        transition: 0.3s ease;
+                                                                                                    } */
 
         .like-btn:hover i {
             transform: scale(1.2);
@@ -432,8 +463,8 @@
         }
 
         /* .like-btn i {
-                                                                                    color: #287bf0 !important;
-                                                                                } */
+                                                                                                        color: #287bf0 !important;
+                                                                                                    } */
 
         .like-btn:hover,
         .reply-btn:hover,
@@ -467,7 +498,7 @@
             font-weight: 500px !important;
             /* color: #1877f2 !important; */
             /* font-size: 13px !important;
-                                                                                                                                            margin-top: 6px !important; */
+                                                                                                                                                                margin-top: 6px !important; */
             text-decoration: none;
         }
 
@@ -764,9 +795,9 @@
             <div class="col-lg-8">
                 <article class="p-1">
                     <!-- <div class="card p-2">
-                                                                                                                                                                                                                                                                                                                                                                                                                                        <h1 class="mb-3">{{ $debat->title }}</h1>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            <h1 class="mb-3">{{ $debat->titre }}</h1>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
                     <!-- <div class="post-img" style="background-image: url('/images{{ $debat->image }}'); "> -->
                     <div class="post-img" style="background-image: url('{{ $debat->image }}'); ">
 
@@ -1238,8 +1269,8 @@
                                                 <!-- Camera Button -->
 
                                                 <!-- <button type="button" id="camera-button" class="btn btn-light btn-icon me-1" style="width: 40px; height: 40px;">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="fas fa-camera text-muted"></i>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fas fa-camera text-muted"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </button> -->
                                                 <!-- Photo Upload Input -->
                                                 <!-- <input type="file" id="photo-upload" name="photo" style="display: none;"> -->
 
@@ -1248,7 +1279,7 @@
 
 
                                                 <!-- <a class="ms-1 text-muted" href="javascript:void(0);" id="attachment-button"><i class="fas fa-paperclip"></i></a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input type="file" id="attachment-upload" name="attachment" style="display: none;"> -->
 
                                                 <!-- <a class="ms-3 text-muted" href="javascript:void(0);" id="emoji-button"><i class="fas fa-smile"></i></a> -->
                                                 <button class="ms-2 btn btn-secondary rounded-pill border-none" type="submit"
@@ -1302,7 +1333,7 @@
 
 <!-- scripts -->
 
-@vite(['resources/js/app.js'])
+{{-- @vite(['resources/js/app.js']) --}}
 @push('scripts')
     <div id="shareModal" class="modal fade" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -1313,12 +1344,19 @@
                 </div>
                 <div class="modal-body text-center">
                     <h6>Sélectionnez une plateforme pour le partage:</h6>
-                    <div class="d-flex justify-content-around">
-                        <button class="btn btn-primary" onclick="shareToFacebook()">Facebook</button>
-                        <button class="btn btn-info" onclick="shareToLinkedIn()">LinkedIn</button>
-                        <button class="btn btn-success" onclick="shareToWhatsApp()">WhatsApp</button>
-                        <button class="btn btn-dark" onclick="shareToInstagram()">Instagram</button>
+                    <div class="d-flex flex-wrap justify-content-around gap-1">
+                        <button class="btn btn-primary" onclick="shareToFacebook()" title="Partager sur Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button class="btn btn-info" onclick="shareToLinkedIn()" title="Partager sur LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </button>
+                        <button class="btn btn-success" onclick="shareToWhatsApp()" title="Partager sur WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+
                     </div>
+
                 </div>
             </div>
         </div>
@@ -1422,49 +1460,50 @@
 
     {{-- AI control system --}}
 
+    @php
 
+        $slug = Str::slug($debat->titre);
+        $shareUrl = url("debat/{$debat->id_debat}/{$slug}");
+        $shareText = "Découvrez ce débat et rejoignez la discussion \n  : $shareUrl";
+    @endphp
 
     <script>
         // Function to open the share modal and prevent navigation
         function openShareModal() {
-            // Prevent the default link behavior
-            const link = document.getElementById('shareLink'); // Store the link element
+            event.preventDefault(); // Prevent the default link behavior
 
             // Open the share modal (Bootstrap modal)
             var myModal = new bootstrap.Modal(document.getElementById('shareModal'));
             myModal.show();
 
             // Store the link so it can be opened after sharing
-            sessionStorage.setItem('shareLink', link.href); // Store the URL for later
+            // Store the URL for later
         }
 
         // Function to share to Facebook
         function shareToFacebook() {
-            const url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(window.location.href);
-            window.open(url, '_blank', 'width=600,height=400');
-            closeModalAndRedirect();
+            const url = encodeURIComponent("{{ $shareUrl }}");
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+            window.open(facebookUrl, '_blank', 'width=600,height=400');
         }
+
 
         // Function to share to LinkedIn
         function shareToLinkedIn() {
-            const url = "https://www.linkedin.com/shareArticle?mini=true&url=" + encodeURIComponent(window.location.href);
-            window.open(url, '_blank', 'width=600,height=400');
-            closeModalAndRedirect();
+            const url = encodeURIComponent("{{ $shareUrl }}");
+            const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+            window.open(linkedinUrl, '_blank', 'width=600,height=400');
         }
+
 
         // Function to share to WhatsApp
         function shareToWhatsApp() {
-            const url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(window.location.href);
-            window.open(url, '_blank', 'width=600,height=400');
-            closeModalAndRedirect();
+            const text = encodeURIComponent(
+                "Découvrez ce débat et rejoignez la discussion : \n  {{ $shareUrl }}");
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${text}`;
+            window.open(whatsappUrl, '_blank');
         }
 
-        // Function to share to Instagram (Not applicable via web)
-        function shareToInstagram() {
-            const url = "https://www.instagram.com/";
-            window.open(url, '_blank', 'width=600,height=400');
-            closeModalAndRedirect();
-        }
 
         // Function to close the modal and redirect the user after sharing
         function closeModalAndRedirect() {

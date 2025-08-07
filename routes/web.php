@@ -88,6 +88,8 @@ Route::get('/verify-email/{token}', function($token){
     return redirect('/')->with('success', 'Votre e-mail a été vérifié avec succès !');
 });
 
+Route::get('/search', [App\Http\Controllers\DebateController::class, 'search'])->name('search.debates');
+
 
 Route::get('/otp/verify', [LoginController::class, 'showOtpForm'])->name('otp.verify.form');
 Route::post('/otp/verify', [LoginController::class, 'verifyOtp'])->name('otp.verify');
@@ -122,7 +124,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/droits', [HomeController::class, 'droits']);
     Route::get('/debats', [HomeController::class, 'debats']);
 
-    Route::get('/debat/{id}', [HomeController::class, 'debat'])->name('debat');
+    Route::get('/debat/{id}/{slug}', [HomeController::class, 'debat'])->name('debat');
 
     Route::get('/post-cards/{postCard}/messages', [MessageController::class, 'index']);
 

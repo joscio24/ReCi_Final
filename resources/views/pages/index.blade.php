@@ -13,11 +13,12 @@
 
         <div class="post-sections mb-4">
 
+
             <div class="container" style="margin-top: -6rem">
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-                <div class="container py-5">
-                    <div class="row g-4">
+                <div class="container py-5" >
+                    <div class="row g-4" id="defaultContent">
                         <!-- Card 1 -->
                         <div class="col-md-4">
                             <div class="card h-100 text-center shadow-lg">
@@ -62,18 +63,21 @@
             </div>
 
 
+
+
+
+
+            <!-- Where results will be dynamically injected -->
+            <div id="searchResults" class="container my-5">
+                @include('partials.debate-results', [
+                    'debates' => $debates,
+                    'searchTerm' => $searchTerm ?? null,
+                ])
+            </div>
+
+
             <div class="container my-5 ">
 
-                <x-section-title text="Les débats récents :" />
-                <div class="row">
-                    @foreach ($debates->where('statut', 'Validé')->take(4) as $card)
-                        <div class="col-md-6 mb-4">
-                            <x-post-card :category="$card['category']" :id="$card['id_debat']" :date="$card['created_at']" :title="$card['titre']"
-                                :description="$card['description']" :image="$card['image']" :status="$card['statut']" :comments="$card->commentaires_count" :likes="$card->votes_count"
-                                :views="0" />
-                        </div>
-                    @endforeach
-                </div>
             </div>
         </div>
 
@@ -108,8 +112,8 @@
                     @foreach ($debates->take(4) as $card)
                         <div class="col-md-6 mb-4">
                             <x-post-card :category="$card['category']" :id="$card['id_debat']" :date="$card['created_at']" :title="$card['titre']"
-                                :description="$card['description']" :image="$card['image']" :status="$card['statut']" :comments="$card->commentaires_count"
-                                :likes="$card->votes_count" :views="0" />
+                                :description="$card['description']" :image="$card['image']" :status="$card['statut']" :comments="$card->commentaires_count" :likes="$card->votes_count"
+                                :views="0" />
                         </div>
                     @endforeach
                 </div>
@@ -157,6 +161,6 @@
 @endsection
 
 <!-- scripts -->
-@push('script')
+@push('scripts')
     <script></script>
 @endpush
