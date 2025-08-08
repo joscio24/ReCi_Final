@@ -6,11 +6,11 @@
 <div class="login-page bg-light overflow-hidden">
     <div class="container p-4">
         <div class="row rounded overflow-hidden h-100">
-            <div class="col-md-6 i-holders">
+            <div class="col-md-6 p-2 i-holders " >
                 <div class="d-flex justify-content-center">
-                    <div class="image-section its" style="height: 480px;"></div>
-                    <div class="image-section" style="height: 480px;"></div>
-                    <div class="image-section" style="height: 480px;"></div>
+                    <div class="image-section its" ></div>
+                    <div class="image-section" ></div>
+                    <div class="image-section" ></div>
                 </div>
             </div>
             <div class="col-md-5 p-5 d-flex flex-column">

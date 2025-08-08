@@ -95,6 +95,20 @@ Route::get('/otp/verify', [LoginController::class, 'showOtpForm'])->name('otp.ve
 Route::post('/otp/verify', [LoginController::class, 'verifyOtp'])->name('otp.verify');
 Route::post('/otp-resend', [LoginController::class, 'resendOtp'])->name('otp.resend');
 
+
+// Password Recovery
+Route::get('/password/forgot', [LoginController::class, 'showForgotPasswordForm'])->name('password.request');
+Route::post('/password/forgot', [LoginController::class, 'sendResetOtp'])->name('password.email');
+
+Route::get('/password/verify-otp', [LoginController::class, 'showResetOtpForm'])->name('password.otp.form');
+Route::post('/password/verify-otp', [LoginController::class, 'verifyResetOtp'])->name('password.otp.verify');
+
+Route::get('/password/reset', [LoginController::class, 'showResetForm'])->name('password.reset.form');
+Route::post('/password/reset', [LoginController::class, 'resetPassword'])->name('password.update');
+
+
+
+
 Route::middleware(['auth'])->group(function () {
     Route::post('/post-cards/{postCard}/messages', [MessageController::class, 'store'])->name('messages.store');
 

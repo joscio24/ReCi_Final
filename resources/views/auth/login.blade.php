@@ -54,7 +54,7 @@
                             <input class="form-check-input" type="checkbox" id="remember-me">
                             <label class="form-check-label" for="remember-me">Se souvenir de moi</label>
                         </div>
-                        <a href="#" class="text-primary">Mot de passe oublié ?</a>
+                        <a href="{{ route('password.request')}}" class="text-primary">Mot de passe oublié ?</a>
                     </div>
 
                     <!-- Login Button -->

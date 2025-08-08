@@ -9,11 +9,11 @@
 
             <div  class="row  rounded overflow-hidden h-100" >
                 <!-- Left Section with Images -->
-                <div class="col-md-6  i-holders ">
+                <div class="col-md-6 p-2 i-holders " >
                     <div class="d-flex justify-content-center">
-                        <div class="image-section its" style="height: 480px;"></div>
-                        <div class="image-section" style="height: 480px;"></div>
-                        <div class="image-section" style="height: 480px;"></div>
+                        <div class="image-section its" ></div>
+                        <div class="image-section" ></div>
+                        <div class="image-section" ></div>
                     </div>
                 </div>
                 <!-- Right Section with Form -->

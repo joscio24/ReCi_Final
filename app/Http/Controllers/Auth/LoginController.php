@@ -121,4 +121,96 @@ class LoginController extends Controller
 
         return response()->json(['success' => true, 'message' => 'OTP resent successfully']);
     }
+
+
+
+    // Step 1: Show Forgot Password Form
+    public function showForgotPasswordForm()
+    {
+        return view('auth.forgot-password');
+    }
+
+    // Step 2: Send OTP for password reset
+    public function sendResetOtp(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'Aucun utilisateur trouvé']);
+        }
+
+        $otpCode = rand(100000, 999999);
+        $expiresAt = now()->addMinutes(10);
+
+        OTP::updateOrCreate(
+            ['email' => $user->email],
+            ['otp' => $otpCode, 'expires_at' => $expiresAt]
+        );
+
+        Mail::to($user->email)->send(new SendOtpMail($otpCode));
+        session(['reset_email' => $user->email]);
+
+        return redirect()->route('password.otp.form')->with('success', 'OTP envoyé à votre email.');
+    }
+
+    // Step 3: Show OTP Verification Form
+    public function showResetOtpForm()
+    {
+        $email = session('reset_email');
+        if (!$email) return redirect()->route('password.request');
+
+        return view('auth.verify-reset-otp', compact('email'));
+    }
+
+    // Step 4: Verify OTP
+    public function verifyResetOtp(Request $request)
+    {
+        $request->validate(['otp' => 'required|digits:6']);
+        $email = session('reset_email');
+
+        $otpRecord = OTP::where('email', $email)
+            ->where('otp', $request->otp)
+            ->where('expires_at', '>', now())
+            ->first();
+
+        if (!$otpRecord) {
+            return back()->withErrors(['otp' => 'OTP invalide ou expiré']);
+        }
+
+        // OTP is valid
+        $otpRecord->delete(); // Clean up
+        session(['otp_verified_email' => $email]);
+
+        return redirect()->route('password.reset.form');
+    }
+
+    // Step 5: Show Reset Password Form
+    public function showResetForm()
+    {
+        $email = session('otp_verified_email');
+        if (!$email) return redirect()->route('password.request');
+
+        return view('auth.reset-password', compact('email'));
+    }
+
+    // Step 6: Save New Password
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $email = session('otp_verified_email');
+        $user = User::where('email', $email)->first();
+
+        if (!$user) return redirect()->route('password.request')->withErrors(['email' => 'Utilisateur introuvable']);
+
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        session()->forget(['otp_verified_email', 'reset_email']);
+
+        return redirect()->route('login')->with('success', 'Mot de passe réinitialisé avec succès.');
+    }
 }
