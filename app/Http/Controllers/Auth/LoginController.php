@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\OTPS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +32,7 @@ class LoginController extends Controller
             $otpCode = rand(100000, 999999);
             $expiresAt = now()->addMinutes(10);
 
-            OTP::updateOrCreate(
+            Otps::updateOrCreate(
                 ['email' => $user->email],
                 ['otp' => $otpCode, 'expires_at' => $expiresAt]
             );
@@ -73,7 +74,7 @@ class LoginController extends Controller
             return response()->json(['success' => false, 'message' => 'Email not found'], 400);
         }
 
-        $otpRecord = Otp::where('email', $email)
+        $otpRecord = Otps::where('email', $email)
             ->where('otp', $request->otp)
             ->where('expires_at', '>', now())
             ->first();
@@ -112,7 +113,7 @@ class LoginController extends Controller
         $otpCode = rand(100000, 999999);
         $expiresAt = now()->addMinutes(10);
 
-        OTP::updateOrCreate(
+        Otps::updateOrCreate(
             ['email' => $email],
             ['otp' => $otpCode, 'expires_at' => $expiresAt]
         );
@@ -143,7 +144,7 @@ class LoginController extends Controller
         $otpCode = rand(100000, 999999);
         $expiresAt = now()->addMinutes(10);
 
-        OTP::updateOrCreate(
+        Otps::updateOrCreate(
             ['email' => $user->email],
             ['otp' => $otpCode, 'expires_at' => $expiresAt]
         );
@@ -169,7 +170,7 @@ class LoginController extends Controller
         $request->validate(['otp' => 'required|digits:6']);
         $email = session('reset_email');
 
-        $otpRecord = OTP::where('email', $email)
+        $otpRecord = Otps::where('email', $email)
             ->where('otp', $request->otp)
             ->where('expires_at', '>', now())
             ->first();

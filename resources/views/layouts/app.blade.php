@@ -185,7 +185,6 @@ header('Content-Type: text/html; charset=UTF-8');
     @vite(['resources/js/app.js'])
 
 
-
     @stack('scripts')
     <script src="/bootstrap/dist/js/emojiPicker.js"></script>
     <script src="/app-assets/vendors/js/extensions/toastr.min.js"></script>
