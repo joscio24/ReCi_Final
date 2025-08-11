@@ -18,7 +18,7 @@ header('Content-Type: text/html; charset=UTF-8');
     @endif
 
     @yield('meta')
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -181,7 +181,6 @@ header('Content-Type: text/html; charset=UTF-8');
     <!-- BEGIN: Theme JS-->
     <script src="/app-assets/js/core/app-menu.js"></script>
     <script src="/app-assets/js/core/app.js"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
 
     @vite(['resources/js/app.js'])
 
